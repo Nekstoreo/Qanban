@@ -10,7 +10,7 @@
 </div>
 
 <p align="center">
-  <img src="./assets/logos/logo.svg" alt="Logo de Qanban" width="200" height="200"/>
+  <img src="./assets/logos/logo.png" alt="Logo de Qanban" width="200" height="200"/>
 </p>
 
 <div align="center">
