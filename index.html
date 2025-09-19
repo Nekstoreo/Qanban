@@ -17,30 +17,31 @@
 </head>
 
 <body>
-  <header class="encabezado navbar navbar-light bg-white border-bottom sticky-top py-2">
+  <header class="encabezado navbar navbar-light sticky-top py-2">
     <div class="contenedor header-inner d-flex align-items-center">
       <!-- Left: marca / logo -->
       <div class="header-left d-flex align-items-center">
-        <div class="marca d-flex flex-column">
-          <h1 class="marca__titulo m-0 h5">Qanban</h1>
-        </div>
+        <a class="marca d-flex align-items-center text-decoration-none" href="#" aria-label="Qanban inicio">
+          <img src="./assets/logos/logo.png" alt="Qanban" width="28" height="28" />
+          <span class="visually-hidden">Qanban</span>
+        </a>
       </div>
 
       <!-- Right: acciones -->
       <div class="header-right ms-auto d-flex align-items-center">
         <div class="acciones d-flex gap-2 align-items-center">
-          <button class="boton boton-fantasma btn btn-outline-secondary btn-sm d-inline-flex align-items-center"
-            aria-label="Cambiar tema" disabled>
+          <button id="toggle-tema" class="boton boton-fantasma btn btn-outline-secondary btn-sm d-inline-flex align-items-center"
+            aria-label="Cambiar tema">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.6" />
             </svg>
             <span class="boton__etiqueta">Tema</span>
           </button>
-          <button class="boton boton-primario btn btn-dark btn-sm d-inline-flex align-items-center" disabled>
+          <button class="boton boton-primario btn btn-sm d-inline-flex align-items-center" disabled>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
             </svg>
-            <span class="boton__etiqueta">Nueva Tablero</span>
+            <span class="boton__etiqueta">Nuevo Tablero</span>
           </button>
         </div>
       </div>
@@ -51,6 +52,73 @@
     <!-- Contenedor vacío; será poblado por JavaScript desde data/tablero.json -->
     <section class="tablero" aria-label="Tablero Kanban"></section>
   </main>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Marked.js para renderizado Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Modal Detalle Tarjeta -->
+  <div class="modal fade" id="modalDetalleTarjeta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalle de la tarjeta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-tarjeta" class="d-flex flex-column gap-3">
+            <div>
+              <label for="campo-titulo" class="form-label">Título</label>
+              <input id="campo-titulo" type="text" class="form-control" placeholder="Título de la tarea" required />
+            </div>
+            <div>
+              <label for="campo-etiquetas" class="form-label">Etiquetas</label>
+              <input id="campo-etiquetas" type="text" class="form-control" placeholder="bug, frontend, urgente" />
+              <div class="form-text">Separadas por coma</div>
+              <div id="etiquetas-preview" class="mt-2 d-flex flex-wrap gap-1"></div>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-4">
+                <label for="campo-prioridad" class="form-label">Prioridad</label>
+                <select id="campo-prioridad" class="form-select">
+                  <option value="baja">Baja</option>
+                  <option value="media">Media</option>
+                  <option value="alta">Alta</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="campo-fecha" class="form-label">Fecha límite</label>
+                <input id="campo-fecha" type="date" class="form-control" />
+              </div>
+              <div class="col-sm-4">
+                <label for="campo-estimacion" class="form-label">Estimación (h)</label>
+                <input id="campo-estimacion" type="number" min="0" step="0.5" class="form-control" />
+              </div>
+            </div>
+            <div>
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="campo-descripcion" class="form-label mb-0">Descripción</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="toggle-preview" />
+                  <label class="form-check-label" for="toggle-preview">Previsualizar</label>
+                </div>
+              </div>
+              <textarea id="campo-descripcion" class="form-control" rows="6" placeholder="Usa Markdown para dar formato..."></textarea>
+              <div id="preview-descripcion" class="border rounded p-3 mt-2 d-none"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-danger" id="btn-eliminar-tarjeta">Eliminar</button>
+          <div>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button id="btn-guardar-tarjeta" type="button" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="./scripts/index.js"></script>
 </body>
 </html>
