@@ -1,0 +1,121 @@
+{
+  "tablero": {
+    "nombre": "Qanban",
+    "listas": [
+      {
+        "id": "backlog",
+        "titulo": "Backlog",
+        "tarjetas": [
+          {
+            "id": "1",
+            "titulo": "Configurar estructura del proyecto",
+            "prioridad": "baja",
+            "etiquetas": ["setup", "ui"]
+          },
+          {
+            "id": "2",
+            "titulo": "Diseñar tarjetas de tarea",
+            "prioridad": "media",
+            "etiquetas": ["ux", "cards"]
+          },
+          {
+            "id": "3",
+            "titulo": "Definir sistema de columnas",
+            "prioridad": "baja",
+            "etiquetas": ["kanban"]
+          },
+          {
+            "id": "4",
+            "titulo": "Implementar funcionalidad drag & drop",
+            "prioridad": "alta",
+            "etiquetas": ["javascript", "interactivity"]
+          },
+          {
+            "id": "5",
+            "titulo": "Crear sistema de filtros por etiquetas",
+            "prioridad": "media",
+            "etiquetas": ["filters", "ux"]
+          },
+          {
+            "id": "6",
+            "titulo": "Diseñar modo oscuro",
+            "prioridad": "media",
+            "etiquetas": ["theme", "css"]
+          },
+          {
+            "id": "7",
+            "titulo": "Implementar persistencia de datos",
+            "prioridad": "alta",
+            "etiquetas": ["localStorage", "data"]
+          },
+          {
+            "id": "8",
+            "titulo": "Crear sistema de notificaciones",
+            "prioridad": "baja",
+            "etiquetas": ["notifications", "ux"]
+          },
+          {
+            "id": "9",
+            "titulo": "Optimizar rendimiento de renderizado",
+            "prioridad": "media",
+            "etiquetas": ["performance", "optimization"]
+          },
+          {
+            "id": "10",
+            "titulo": "Añadir soporte para exportar tableros",
+            "prioridad": "baja",
+            "etiquetas": ["export", "json"]
+          },
+          {
+            "id": "11",
+            "titulo": "Implementar búsqueda de tarjetas",
+            "prioridad": "media",
+            "etiquetas": ["search", "functionality"]
+          },
+          {
+            "id": "12",
+            "titulo": "Crear tutorial interactivo",
+            "prioridad": "baja",
+            "etiquetas": ["tutorial", "onboarding"]
+          }
+        ]
+      },
+      {
+        "id": "por-hacer",
+        "titulo": "Por hacer",
+        "tarjetas": [
+          {
+            "id": "13",
+            "titulo": "Crear layout responsive",
+            "prioridad": "media",
+            "etiquetas": ["layout"],
+            "fecha": "2025-08-20"
+          },
+          {
+            "id": "14",
+            "titulo": "Estilizar estados de prioridad",
+            "prioridad": "alta",
+            "etiquetas": ["a11y", "design"]
+          }
+        ]
+      },
+      {
+        "id": "en-progreso",
+        "titulo": "En progreso",
+        "tarjetas": [
+          {
+            "id": "15",
+            "titulo": "Maquetar tablero base",
+            "prioridad": "media",
+            "etiquetas": ["html", "css"]
+          }
+        ]
+      },
+      {
+        "id": "hecho",
+        "titulo": "Hecho",
+        "tarjetas": []
+      }
+    ]
+  }
+}
