@@ -147,34 +147,47 @@ main.contenedor {
   box-shadow: 0 .0625rem .125rem rgba(16, 24, 40, .06), 0 .0625rem .0625rem rgba(16, 24, 40, .04);
   display: flex;
   flex-direction: column;
-  min-height: 80vh
-}
-
-/* Ajustes para scroll interno de columnas */
-.columna {
+  min-height: fit-content;
   max-height: 80vh;
-  display: flex;
-  flex-direction: column;
+  height: auto;
 }
 
 .columna__cuerpo {
-  max-height: calc(80vh - 3rem); /* Restar altura del header */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.columna__contenido-scroll {
+  flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
+  padding: 0.5rem;
+  padding-bottom: 0;
 }
 
-.columna__cuerpo::-webkit-scrollbar {
+.columna__contenido-scroll::-webkit-scrollbar {
   width: .375rem;
 }
 
-.columna__cuerpo::-webkit-scrollbar-thumb {
+.columna__contenido-scroll::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 999px;
 }
 
-.columna__cuerpo::-webkit-scrollbar-track {
+.columna__contenido-scroll::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* Pie de columna: espacio fijo en la parte inferior de cada columna */
+.columna__pie {
+  flex: 0 0 auto;
+  padding: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+  background: #ffffff;
 }
 
 .columna__cabecera {
@@ -191,12 +204,10 @@ main.contenedor {
   border: 1px solid #e5e7eb
 }
 
-.columna__cuerpo {
-  flex: 1 1 auto;
-  overflow: auto;
+.tarjetas-container {
   display: flex;
   flex-direction: column;
-  gap: .5rem
+  gap: .5rem;
 }
 
 .tarjeta.card {
@@ -251,7 +262,9 @@ main.contenedor {
   background: transparent;
   border-radius: .75rem;
   padding: .6rem .75rem;
-  cursor: pointer
+  cursor: pointer;
+  margin: 0;
+  width: 100%;
 }
 
 .tarjeta--nueva:hover {
@@ -267,16 +280,6 @@ main.contenedor {
 
 .tarjeta--nueva svg {
   flex: 0 0 auto
-}
-
-.columna__cuerpo {
-  padding-bottom: 0.5rem;
-}
-
-.tarjeta--nueva {
-  margin-top: auto;
-  width: calc(100% - 1rem);
-  align-self: center;
 }
 
 .badge {
@@ -296,13 +299,13 @@ main.contenedor {
   border: 1px solid #d1d5db
 }
 
-.prioridad-media {
+.insignia--media {
   background: #fef3c7;
   color: #b45309;
   border: 1px solid #fde68a
 }
 
-.prioridad-alta {
+.insignia--alta {
   background: #fee2e2;
   color: #b91c1c;
   border: 1px solid #fecaca
@@ -334,58 +337,55 @@ main.contenedor {
   background: rgba(59, 130, 246, .06)
 }
 
-.pie {
-  background: transparent
-}
-
-.pie .container {
-  padding-block: .5rem;
-}
-
-.pie p {
-  margin: 0;
-  line-height: 1.25;
-}
+/* (Removed unused .pie rules) */
 
 :focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px
 }
 
-.tablero__contenedor::-webkit-scrollbar,
-.columna__cuerpo::-webkit-scrollbar {
+.tablero__contenedor::-webkit-scrollbar {
   height: .625rem;
-  width: .5rem
+  width: .5rem;
 }
 
-.tablero__contenedor::-webkit-scrollbar-thumb,
-.columna__cuerpo::-webkit-scrollbar-thumb {
+.tablero__contenedor::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 999px
+  border-radius: 999px;
 }
 
 .tablero__contenedor {
   -ms-overflow-style: auto;
-  scrollbar-color: #cbd5e1 transparent
+  scrollbar-color: #cbd5e1 transparent;
 }
 
 .vacio {
-  color: #64748b
-}
-
-/* Overrides para asegurar scroll interno en listas sin crecer la columna */
-.columna {
-  height: 80vh;
+  color: #64748b;
+  padding: 1rem;
+  text-align: center;
 }
 
 .columna__cuerpo {
-  max-height: none;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 4rem;
 }
 
-/* Estilos adicionales para tamaños fijos de tarjetas */
+.columna__pie {
+  border-top: 1px solid #f3f4f6;
+  background: #ffffff;
+  border-radius: 0 0 .75rem .75rem;
+}
+
+.columna__contenido-scroll:has(.vacio) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+}
+
+.columna__contenido-scroll {
+  border-radius: .375rem;
+}
+
 .insignias {
   flex-wrap: wrap;
   max-width: 40%;
