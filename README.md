@@ -29,9 +29,6 @@
   - [🎮 Demo](#-demo)
     - [👉 Abre `index.html` en tu navegador para ver la maqueta completa](#-abre-indexhtml-en-tu-navegador-para-ver-la-maqueta-completa)
   - [🔧 Instalación](#-instalación)
-  - [📘 Uso](#-uso)
-    - [Flujo de trabajo:](#flujo-de-trabajo)
-  - [🛣️ Roadmap](#️-roadmap)
   - [🤝 Contribuciones](#-contribuciones)
   - [📄 Licencia](#-licencia)
   - [👤 Autor](#-autor)
@@ -125,65 +122,6 @@ xdg-open index.html
 # Alternativa para Windows
 start index.html
 ```
-
-## 📘 Uso
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center"><img src="https://via.placeholder.com/60x60?text=➕" alt="Nueva Tarjeta"/></td>
-      <td align="center"><img src="https://via.placeholder.com/60x60?text=📋" alt="Nueva Lista"/></td>
-      <td align="center"><img src="https://via.placeholder.com/60x60?text=🔢" alt="Contador"/></td>
-      <td align="center"><img src="https://via.placeholder.com/60x60?text=🏷️" alt="Etiquetas"/></td>
-    </tr>
-    <tr>
-      <td align="center">Crear nuevas tarjetas</td>
-      <td align="center">Añadir columnas</td>
-      <td align="center">Ver contadores</td>
-      <td align="center">Usar etiquetas</td>
-    </tr>
-  </table>
-</div>
-
-### Flujo de trabajo:
-
-1. **Organiza tus tareas** en las columnas correspondientes
-2. **Visualiza prioridades** con los indicadores de color
-3. **Gestiona el progreso** moviendo tarjetas entre columnas
-4. **Categoriza** usando las etiquetas disponibles
-
-## 🛣️ Roadmap
-
-<div class="progress-container">
-  <div class="progress-item">
-    <h3>Fase 1: Interactividad Básica</h3>
-    <ul>
-      <li>✅ Diseño visual completo</li>
-      <li>✅ Estructura de componentes</li>
-      <li>⏳ Funcionalidad drag & drop</li>
-      <li>⏳ Edición de tarjetas</li>
-    </ul>
-  </div>
-  
-  <div class="progress-item">
-    <h3>Fase 2: Persistencia de Datos</h3>
-    <ul>
-      <li>⏳ Almacenamiento LocalStorage</li>
-      <li>⏳ Importar/exportar tableros</li>
-      <li>⏳ Validación y manejo de errores</li>
-    </ul>
-  </div>
-  
-  <div class="progress-item">
-    <h3>Fase 3: Experiencia Avanzada</h3>
-    <ul>
-      <li>⏳ Soporte para Markdown</li>
-      <li>⏳ Modo oscuro/claro</li>
-      <li>⏳ Sistema de notificaciones</li>
-      <li>⏳ Historial de acciones</li>
-    </ul>
-  </div>
-</div>
 
 ## 🤝 Contribuciones
 
