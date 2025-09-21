@@ -94,12 +94,9 @@ main.contenedor {
 .marca__titulo {
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.4px;
-  color: var(--primary);
-  font-size: 1.5rem;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
 }
 
 .encabezado .marca {
@@ -223,6 +220,7 @@ main.contenedor {
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  max-height: calc(80vh - 110px); /* Altura máxima: 80vh menos altura de cabecera y pie aprox */
 }
 
 .columna__contenido-scroll {
@@ -232,6 +230,8 @@ main.contenedor {
   scrollbar-color: #cbd5e1 transparent;
   padding: 0.75rem;
   padding-bottom: 0.75rem;
+  height: 100%;
+  max-height: 100%;
 }
 
 .columna__contenido-scroll::-webkit-scrollbar {
@@ -253,13 +253,18 @@ main.contenedor {
   padding: 0.75rem;
   border-top: 1px solid var(--border-light);
   background: var(--surface);
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
 }
 
 .columna__cabecera {
   background: var(--surface);
   padding: 1rem 0.75rem;
   border-bottom: 1px solid var(--border-light);
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .columna__titulo {
@@ -341,28 +346,32 @@ main.contenedor {
   padding: 1rem;
 }
 
-/* Nuevo indicador de prioridad en el lateral de la tarjeta */
+/* Indicador de prioridad en el lateral de la tarjeta - más grueso */
 .tarjeta.card::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 6px;
   background: transparent;
   transition: background-color var(--transition-base);
+  border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
 }
 
 .tarjeta.card[data-prioridad="alta"]::before {
   background-color: var(--danger);
+  box-shadow: inset -2px 0 4px rgba(255, 86, 48, 0.3);
 }
 
 .tarjeta.card[data-prioridad="media"]::before {
   background-color: var(--warning);
+  box-shadow: inset -2px 0 4px rgba(255, 171, 0, 0.3);
 }
 
 .tarjeta.card[data-prioridad="baja"]::before {
   background-color: var(--success);
+  box-shadow: inset -2px 0 4px rgba(54, 179, 126, 0.3);
 }
 
 .tarjeta--nueva {
@@ -381,24 +390,65 @@ main.contenedor {
   transition: all var(--transition-base);
 }
 
-/* Pie de tarjeta: etiquetas arriba, prioridad/fecha abajo */
+/* Pie de tarjeta: etiquetas arriba, indicadores abajo */
 .tarjeta__pie {
-  padding: .75rem 1rem;
+  padding: 1rem;
   background: var(--surface);
+  position: relative;
 }
 
-.tarjeta__pie .metadatos {
+/* Indicador de checklist en tarjetas */
+.tarjeta.card[data-has-checklist="true"] .tarjeta__pie::before {
+  content: '';
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarjeta.card[data-has-checklist="true"] .tarjeta__pie::after {
+  content: '';
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3 8-8'/%3E%3Cpath d='M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.395 0 2.69.315 3.856.88'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 2px;
+}
+
+/* Contenedor de etiquetas */
+.etiquetas-container {
+  margin-bottom: 0.25rem;
+  width: 100%;
+}
+
+.etiquetas-container .metadatos {
   display: flex;
   gap: .5rem;
   flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0;
 }
 
-.metadatos-bottom {
+/* Contenedor de indicadores (fecha y poker planning) */
+.indicadores-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: .75rem;
-  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-light);
 }
 
 .insignias {
@@ -700,31 +750,6 @@ main.contenedor {
   border-color: var(--primary-light);
 }
 
-/* Tema oscuro para preview de descripción */
-:root.dark #preview-descripcion {
-  background: var(--surface);
-  color: var(--text-primary);
-  border-color: var(--border-light);
-}
-
-:root.dark #preview-descripcion h1,
-:root.dark #preview-descripcion h2,
-:root.dark #preview-descripcion h3,
-:root.dark #preview-descripcion h4,
-:root.dark #preview-descripcion h5,
-:root.dark #preview-descripcion h6 {
-  color: var(--text-primary);
-}
-
-:root.dark #preview-descripcion code {
-  background: var(--surface-hover);
-  color: var(--text-secondary);
-}
-
-:root.dark #preview-descripcion blockquote {
-  border-left-color: var(--primary);
-  color: var(--text-secondary);
-}
 
 /* Tema oscuro para elementos de Bootstrap */
 :root.dark .text-muted {
@@ -746,6 +771,11 @@ main.contenedor {
 /* Tema oscuro para elementos específicos */
 :root.dark .vacio {
   color: var(--text-muted);
+}
+
+/* Tema oscuro para elementos de tarjetas */
+:root.dark .indicadores-container {
+  border-top-color: var(--border-light);
 }
 
 :root.dark .contador {
@@ -771,4 +801,314 @@ main.contenedor {
 /* Personalización para el header */
 .header-left {
   position: relative;
+}
+
+/* Estilos para dropdown del header */
+.dropdown-menu {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  margin-top: 0.5rem;
+  min-width: 180px;
+}
+
+.dropdown-item {
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-base);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--surface-hover);
+  color: var(--primary);
+}
+
+.dropdown-divider {
+  border-color: var(--border-light);
+  margin: 0.25rem 0;
+}
+
+/* Tema oscuro para dropdown */
+:root.dark .dropdown-menu {
+  background: var(--surface);
+  border-color: var(--border-light);
+}
+
+:root.dark .dropdown-item {
+  color: var(--text-primary);
+}
+
+:root.dark .dropdown-item:hover,
+:root.dark .dropdown-item:focus {
+  background: var(--surface-hover);
+  color: var(--primary);
+}
+
+:root.dark .dropdown-divider {
+  border-color: var(--border-light);
+}
+
+/* Estilos para menú de columnas */
+.columna__cabecera .btn-outline-light {
+  color: var(--text-muted);
+  border: none;
+  opacity: 0.6;
+  transition: all var(--transition-base);
+}
+
+.columna__cabecera .btn-outline-light:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+  opacity: 1;
+}
+
+.columna__cabecera .dropdown-menu {
+  min-width: 160px;
+  margin-top: 0.25rem;
+}
+
+:root.dark .columna__cabecera .btn-outline-light {
+  color: var(--text-muted);
+}
+
+:root.dark .columna__cabecera .btn-outline-light:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+}
+
+
+
+
+
+
+/* Indicador de Poker Planning */
+.poker-planning-indicator {
+  background: var(--primary);
+  color: white;
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-base);
+  min-width: 2.5rem;
+  justify-content: center;
+}
+
+.poker-planning-indicator i {
+  flex-shrink: 0;
+}
+
+.poker-planning-indicator:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: var(--primary-dark);
+}
+
+:root.dark .poker-planning-indicator {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:root.dark .poker-planning-indicator:hover {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Colores intuitivos para poker planning */
+.poker-planning-indicator.poker-1,
+.poker-planning-indicator.poker-2,
+.poker-planning-indicator.poker-3 {
+  background: #10B981; /* Verde - fácil/rápido */
+  color: white;
+}
+
+.poker-planning-indicator.poker-1:hover,
+.poker-planning-indicator.poker-2:hover,
+.poker-planning-indicator.poker-3:hover {
+  background: #059669;
+}
+
+.poker-planning-indicator.poker-5,
+.poker-planning-indicator.poker-8 {
+  background: #F59E0B; /* Amarillo/naranja - moderado */
+  color: white;
+}
+
+.poker-planning-indicator.poker-5:hover,
+.poker-planning-indicator.poker-8:hover {
+  background: #D97706;
+}
+
+.poker-planning-indicator.poker-13,
+.poker-planning-indicator.poker-20 {
+  background: #EF4444; /* Rojo - complejo */
+  color: white;
+}
+
+.poker-planning-indicator.poker-13:hover,
+.poker-planning-indicator.poker-20:hover {
+  background: #DC2626;
+}
+
+.poker-planning-indicator.poker-40,
+.poker-planning-indicator.poker-100 {
+  background: #7C3AED; /* Morado oscuro - muy complejo */
+  color: white;
+}
+
+.poker-planning-indicator.poker-40:hover,
+.poker-planning-indicator.poker-100:hover {
+  background: #6D28D9;
+}
+
+.poker-planning-indicator.poker-unknown {
+  background: #6B7280; /* Gris - incierto */
+  color: white;
+}
+
+.poker-planning-indicator.poker-unknown:hover {
+  background: #4B5563;
+}
+
+/* Tema oscuro para poker planning */
+:root.dark .poker-planning-indicator.poker-1,
+:root.dark .poker-planning-indicator.poker-2,
+:root.dark .poker-planning-indicator.poker-3 {
+  background: #34D399;
+  color: #064E3B;
+}
+
+:root.dark .poker-planning-indicator.poker-1:hover,
+:root.dark .poker-planning-indicator.poker-2:hover,
+:root.dark .poker-planning-indicator.poker-3:hover {
+  background: #10B981;
+  color: white;
+}
+
+:root.dark .poker-planning-indicator.poker-5,
+:root.dark .poker-planning-indicator.poker-8 {
+  background: #FCD34D;
+  color: #92400E;
+}
+
+:root.dark .poker-planning-indicator.poker-5:hover,
+:root.dark .poker-planning-indicator.poker-8:hover {
+  background: #F59E0B;
+  color: white;
+}
+
+:root.dark .poker-planning-indicator.poker-13,
+:root.dark .poker-planning-indicator.poker-20 {
+  background: #F87171;
+  color: #991B1B;
+}
+
+:root.dark .poker-planning-indicator.poker-13:hover,
+:root.dark .poker-planning-indicator.poker-20:hover {
+  background: #EF4444;
+  color: white;
+}
+
+:root.dark .poker-planning-indicator.poker-40,
+:root.dark .poker-planning-indicator.poker-100 {
+  background: #A78BFA;
+  color: #4C1D95;
+}
+
+:root.dark .poker-planning-indicator.poker-40:hover,
+:root.dark .poker-planning-indicator.poker-100:hover {
+  background: #7C3AED;
+  color: white;
+}
+
+:root.dark .poker-planning-indicator.poker-unknown {
+  background: #9CA3AF;
+  color: #1F2937;
+}
+
+:root.dark .poker-planning-indicator.poker-unknown:hover {
+  background: #6B7280;
+  color: white;
+}
+
+/* Actualización del diseño de metadatos bottom */
+.metadatos-bottom {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.metadatos-bottom > div:first-child {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+}
+
+.metadatos-bottom > div:nth-child(2) {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.metadatos-bottom > div:last-child {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+/* Tema oscuro para nuevos elementos */
+
+
+/* Estilos para la sección de checklist en el modal */
+.checklist-section {
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.checklist-item {
+  background: var(--surface);
+  border-color: var(--border-light) !important;
+  transition: all var(--transition-base);
+}
+
+.checklist-item:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary-light) !important;
+}
+
+.checklist-item .form-check-input {
+  margin-top: 0;
+}
+
+.checklist-item .btn {
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.checklist-item:hover .btn {
+  opacity: 1;
+}
+
+.checklist-item .btn:hover {
+  opacity: 1 !important;
+}
+
+/* Tema oscuro para checklist */
+:root.dark .checklist-section {
+  border-top-color: var(--border-light);
+}
+
+:root.dark .checklist-item {
+  background: var(--surface);
+  border-color: var(--border-light) !important;
+}
+
+:root.dark .checklist-item:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary-light) !important;
 }

@@ -31,6 +31,19 @@ function alternarTema() {
     document.querySelector('meta[name="theme-color"]').setAttribute('content', esOscuro ? '#0F172A' : '#3b82f6');
 }
 
+// Función para validar y normalizar una tarjeta
+function normalizarTarjeta(tarjeta) {
+    return {
+        id: tarjeta.id || Date.now().toString(),
+        titulo: tarjeta.titulo || 'Sin título',
+        prioridad: tarjeta.prioridad || 'baja',
+        etiquetas: Array.isArray(tarjeta.etiquetas) ? tarjeta.etiquetas : [],
+        descripcion: tarjeta.descripcion || '',
+        pokerPlanning: tarjeta.pokerPlanning || '',
+        fecha: tarjeta.fecha || undefined
+    };
+}
+
 // Función para cargar los datos del tablero desde JSON
 async function cargarDatosTablero() {
     try {
@@ -39,6 +52,17 @@ async function cargarDatosTablero() {
             throw new Error('Error al cargar el archivo JSON');
         }
         const datos = await respuesta.json();
+
+        // Normalizar todas las tarjetas
+        if (datos.tablero && datos.tablero.listas) {
+            datos.tablero.listas.forEach(lista => {
+                if (lista.tarjetas && Array.isArray(lista.tarjetas)) {
+                    lista.tarjetas = lista.tarjetas.map(normalizarTarjeta);
+                }
+            });
+        }
+
+        console.log('Datos del tablero cargados y normalizados:', datos.tablero);
         return datos.tablero;
     } catch (error) {
         console.error('Error cargando datos del tablero:', error);
@@ -61,6 +85,38 @@ function crearInsigniaPrioridad(prioridad) {
     span.className = clase;
     span.textContent = prioridad ? prioridad.charAt(0).toUpperCase() + prioridad.slice(1) : '';
     return span;
+}
+
+// Edición inline de título de lista
+function iniciarEdicionTituloLista(tituloElemento, lista) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control form-control-sm';
+    input.value = lista.titulo || '';
+    tituloElemento.replaceWith(input);
+    input.focus();
+    input.select();
+
+    const finalizar = (guardar) => {
+        const nuevoTitulo = input.value.trim() || 'Sin título';
+        if (guardar) {
+            lista.titulo = nuevoTitulo;
+            guardarEstadoTablero();
+        }
+        const h2 = document.createElement('h2');
+        h2.className = 'columna__titulo h6 m-0';
+        h2.id = `col-${lista.id.replace(/\s+/g, '-').toLowerCase()}-titulo`;
+        h2.textContent = lista.titulo;
+        h2.title = 'Haz doble clic para editar';
+        h2.addEventListener('dblclick', () => iniciarEdicionTituloLista(h2, lista));
+        input.replaceWith(h2);
+    };
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') finalizar(true);
+        if (e.key === 'Escape') finalizar(false);
+    });
+    input.addEventListener('blur', () => finalizar(true));
 }
 
 // Edición inline de título de tarjeta
@@ -96,6 +152,16 @@ function iniciarEdicionTitulo(tituloElemento, tarjeta) {
 
 // Crear tarjeta DOM
 function crearTarjeta(tarjeta) {
+    // Debug: verificar que la tarjeta tenga todos los campos necesarios
+    console.log('Creando tarjeta:', {
+        id: tarjeta.id,
+        titulo: tarjeta.titulo,
+        tipo: tarjeta.tipo,
+        complejidad: tarjeta.complejidad,
+        estimacion: tarjeta.estimacion,
+        subtareasCompletadas: tarjeta.subtareasCompletadas,
+        subtareasTotal: tarjeta.subtareasTotal
+    });
     const card = document.createElement('div');
     card.className = 'tarjeta card';
     card.tabIndex = 0;
@@ -103,6 +169,11 @@ function crearTarjeta(tarjeta) {
     // Añadimos el atributo data-prioridad para el estilo del borde lateral
     if (tarjeta.prioridad) {
         card.setAttribute('data-prioridad', tarjeta.prioridad);
+    }
+
+    // Añadimos el atributo data-has-checklist si la tarjeta tiene checklist
+    if (tarjeta.checklist && Array.isArray(tarjeta.checklist) && tarjeta.checklist.length > 0) {
+        card.setAttribute('data-has-checklist', 'true');
     }
 
     // Cabecera: solo título (no truncado)
@@ -119,38 +190,74 @@ function crearTarjeta(tarjeta) {
 
     cab.appendChild(h3);
 
-    // Pie: metadatos (prioridad, etiquetas, fecha)
+    // Pie: metadatos (etiquetas, fecha, poker planning)
     const pie = document.createElement('div');
     pie.className = 'tarjeta__pie card-footer d-flex flex-column gap-2';
 
-    const metaTop = document.createElement('div');
-    metaTop.className = 'metadatos d-flex gap-1 flex-wrap';
-    if (Array.isArray(tarjeta.etiquetas)) {
-        tarjeta.etiquetas.forEach(e => metaTop.appendChild(crearEtiqueta(e)));
+    // Sección de etiquetas - mostrar todas siempre
+    const etiquetasContainer = document.createElement('div');
+    etiquetasContainer.className = 'etiquetas-container';
+
+    if (Array.isArray(tarjeta.etiquetas) && tarjeta.etiquetas.length > 0) {
+        const etiquetasMostradas = document.createElement('div');
+        etiquetasMostradas.className = 'metadatos d-flex gap-1 flex-wrap';
+
+        // Mostrar todas las etiquetas
+        tarjeta.etiquetas.forEach(e => etiquetasMostradas.appendChild(crearEtiqueta(e)));
+
+        etiquetasContainer.appendChild(etiquetasMostradas);
     }
 
-    const metaBottom = document.createElement('div');
-    metaBottom.className = 'metadatos-bottom d-flex align-items-center justify-content-between';
+    // Sección de indicadores (fecha y poker planning)
+    const indicadoresContainer = document.createElement('div');
+    indicadoresContainer.className = 'indicadores-container d-flex align-items-center justify-content-between gap-2 flex-wrap';
 
-    const prioridadCont = document.createElement('div');
-    prioridadCont.className = 'insignias d-flex gap-1';
-    if (tarjeta.prioridad) {
-        prioridadCont.appendChild(crearInsigniaPrioridad(tarjeta.prioridad));
-    }
-
-    metaBottom.appendChild(prioridadCont);
-
+    // Fecha
     if (tarjeta.fecha) {
         const time = document.createElement('time');
         time.className = 'fecha d-inline-flex align-items-center gap-1 text-muted small';
         time.dateTime = tarjeta.fecha;
         const fechaTexto = new Date(tarjeta.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-        time.innerHTML = `\n            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">\n                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>\n            </svg>\n            ${fechaTexto}`;
-        metaBottom.appendChild(time);
+        time.innerHTML = `
+            <i data-lucide="calendar" width="14" height="14" aria-hidden="true"></i>
+            ${fechaTexto}`;
+        indicadoresContainer.appendChild(time);
     }
 
-    pie.appendChild(metaTop);
-    pie.appendChild(metaBottom);
+    // Poker Planning
+    if (tarjeta.pokerPlanning && tarjeta.pokerPlanning !== '') {
+        const pokerIndicator = document.createElement('span');
+        pokerIndicator.className = 'poker-planning-indicator badge d-flex align-items-center gap-1';
+
+        // Agregar clase de color basada en el valor
+        const valor = tarjeta.pokerPlanning;
+        if (valor === '?') {
+            pokerIndicator.classList.add('poker-unknown');
+        } else if (['1', '2', '3'].includes(valor)) {
+            pokerIndicator.classList.add(`poker-${valor}`);
+        } else if (['5', '8'].includes(valor)) {
+            pokerIndicator.classList.add(`poker-${valor}`);
+        } else if (['13', '20'].includes(valor)) {
+            pokerIndicator.classList.add(`poker-${valor}`);
+        } else if (['40', '100'].includes(valor)) {
+            pokerIndicator.classList.add(`poker-${valor}`);
+        }
+
+        pokerIndicator.innerHTML = `
+            <i data-lucide="credit-card" width="12" height="12" aria-hidden="true"></i>
+            <span>${tarjeta.pokerPlanning}</span>
+        `;
+        pokerIndicator.title = `Estimación: ${tarjeta.pokerPlanning} ${tarjeta.pokerPlanning === '?' ? 'puntos (incierto)' : 'puntos'}`;
+        indicadoresContainer.appendChild(pokerIndicator);
+    }
+
+    // Agregar secciones al pie
+    pie.appendChild(etiquetasContainer);
+
+    // Solo agregar indicadores si hay contenido
+    if (indicadoresContainer.children.length > 0) {
+        pie.appendChild(indicadoresContainer);
+    }
 
     card.appendChild(cab);
     card.appendChild(pie);
@@ -202,23 +309,20 @@ function abrirModalDetalle(tarjeta, cardElemento) {
     const titulo = document.getElementById('campo-titulo');
     const etiquetas = document.getElementById('campo-etiquetas');
     const prioridad = document.getElementById('campo-prioridad');
+    const pokerPlanning = document.getElementById('campo-poker-planning');
     const fecha = document.getElementById('campo-fecha');
-    const estimacion = document.getElementById('campo-estimacion');
     const descripcion = document.getElementById('campo-descripcion');
-    const preview = document.getElementById('preview-descripcion');
-    const togglePreview = document.getElementById('toggle-preview');
 
     titulo.value = tarjeta.titulo || '';
     etiquetas.value = (tarjeta.etiquetas || []).join(', ');
     prioridad.value = tarjeta.prioridad || 'baja';
+    pokerPlanning.value = tarjeta.pokerPlanning || '';
     fecha.value = tarjeta.fecha ? new Date(tarjeta.fecha).toISOString().slice(0,10) : '';
-    estimacion.value = tarjeta.estimacion || '';
     descripcion.value = tarjeta.descripcion || '';
-    togglePreview.checked = false;
-    preview.classList.add('d-none');
-    descripcion.classList.remove('d-none');
-    preview.innerHTML = tarjeta.descripcion ? marked.parse(tarjeta.descripcion) : '';
     actualizarPreviewEtiquetas();
+
+    // Cargar checklist
+    cargarChecklistEnModal(tarjeta);
 
     const modalEl = document.getElementById('modalDetalleTarjeta');
     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
@@ -234,48 +338,105 @@ function guardarTarjetaDesdeModal() {
     const titulo = document.getElementById('campo-titulo').value.trim() || 'Sin título';
     const etiquetas = document.getElementById('campo-etiquetas').value.split(',').map(e => e.trim()).filter(Boolean);
     const prioridad = document.getElementById('campo-prioridad').value;
+    const pokerPlanning = document.getElementById('campo-poker-planning').value;
     const fecha = document.getElementById('campo-fecha').value;
-    const estimacion = document.getElementById('campo-estimacion').value;
     const descripcion = document.getElementById('campo-descripcion').value;
 
     tarjeta.titulo = titulo;
     tarjeta.etiquetas = etiquetas;
     tarjeta.prioridad = prioridad;
+    tarjeta.pokerPlanning = pokerPlanning || '';
     tarjeta.fecha = fecha || undefined;
-    tarjeta.estimacion = estimacion ? Number(estimacion) : undefined;
     tarjeta.descripcion = descripcion;
+
+    // Guardar checklist
+    const checklist = obtenerChecklistDesdeModal();
+    if (checklist.length > 0) {
+        tarjeta.checklist = checklist;
+    } else {
+        delete tarjeta.checklist;
+    }
 
     // Guardar en localStorage
     guardarEstadoTablero();
 
-    // Actualizar UI de la tarjeta
-    cardElemento.querySelector('.tarjeta__titulo').textContent = titulo;
-    cardElemento.setAttribute('data-prioridad', prioridad);
-    const metaTop = cardElemento.querySelector('.tarjeta__pie .metadatos');
-    metaTop.innerHTML = '';
-    etiquetas.forEach(e => metaTop.appendChild(crearEtiqueta(e)));
-    const metaBottom = cardElemento.querySelector('.tarjeta__pie .metadatos-bottom');
-    const contInsignias = metaBottom.querySelector('.insignias');
-    contInsignias.innerHTML = '';
-    if (prioridad) contInsignias.appendChild(crearInsigniaPrioridad(prioridad));
-    let time = metaBottom.querySelector('time');
-    if (fecha) {
-        if (!time) {
-            time = document.createElement('time');
-            time.className = 'fecha d-inline-flex align-items-center gap-1 text-muted small';
-            metaBottom.appendChild(time);
+    // Actualizar UI de la tarjeta - regenerar para reflejar todos los cambios
+    const nuevoCard = crearTarjeta(tarjeta);
+    cardElemento.replaceWith(nuevoCard);
+
+    // Actualizar la referencia en el estado
+    estado.tarjetaActual.cardElemento = nuevoCard;
+
+    // Inicializar iconos de Lucide para la tarjeta actualizada
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
         }
-        time.dateTime = fecha;
-        const fechaTexto = new Date(fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-        time.innerHTML = `\n            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">\n                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>\n            </svg>\n            ${fechaTexto}`;
-    } else if (time) {
-        time.remove();
-    }
+    }, 50);
 
     // Cerrar modal
     const modalEl = document.getElementById('modalDetalleTarjeta');
     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     modal.hide();
+}
+
+// Eliminar lista
+function eliminarLista(lista, listElemento) {
+    if (!confirm(`¿Eliminar la lista "${lista.titulo}"? Esta acción eliminará todas las tarjetas que contiene y no se puede deshacer.`)) return;
+
+    // Remover del estado
+    estado.tablero.listas = estado.tablero.listas.filter(l => l.id !== lista.id);
+    
+    // Animación de salida
+    listElemento.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+    listElemento.style.opacity = '0';
+    listElemento.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+        listElemento.remove();
+        guardarEstadoTablero();
+    }, 300);
+}
+
+// Copiar lista
+function copiarLista(lista) {
+    const nuevaLista = {
+        id: `lista-${Date.now()}`,
+        titulo: `${lista.titulo} (copia)`,
+        tarjetas: lista.tarjetas.map(tarjeta => ({
+            ...tarjeta,
+            id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        }))
+    };
+    
+    // Añadir al estado
+    estado.tablero.listas.push(nuevaLista);
+    
+    // Crear elemento DOM
+    const tableroContainer = document.querySelector('.tablero__contenedor');
+    const colNueva = tableroContainer.querySelector('.columna--nueva');
+    const nuevaListaElement = crearLista(nuevaLista);
+    
+    // Animación de entrada
+    nuevaListaElement.style.opacity = '0';
+    nuevaListaElement.style.transform = 'translateY(10px)';
+    tableroContainer.insertBefore(nuevaListaElement, colNueva);
+    
+    // Guardar estado
+    guardarEstadoTablero();
+
+    // Aplicar animación
+    void nuevaListaElement.offsetWidth;
+    nuevaListaElement.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+    nuevaListaElement.style.opacity = '1';
+    nuevaListaElement.style.transform = 'translateY(0)';
+
+    // Inicializar iconos de Lucide para la lista copiada
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+    }, 50);
 }
 
 // Eliminar tarjeta
@@ -322,16 +483,67 @@ function crearLista(lista) {
     // Header
     const header = document.createElement('header');
     header.className = 'columna__cabecera d-flex align-items-center justify-content-between border-bottom p-2';
+    
     const h2 = document.createElement('h2');
     h2.className = 'columna__titulo h6 m-0';
     h2.id = `col-${lista.id.replace(/\s+/g, '-').toLowerCase()}-titulo`;
     h2.textContent = lista.titulo;
+    h2.title = 'Haz doble clic para editar';
+    
+    // Edición inline del título de lista
+    h2.addEventListener('dblclick', () => iniciarEdicionTituloLista(h2, lista));
+    
+    const headerRight = document.createElement('div');
+    headerRight.className = 'd-flex align-items-center gap-2';
+    
     const contador = document.createElement('span');
     contador.className = 'contador badge text-bg-light';
     contador.setAttribute('aria-label', 'Tareas');
     contador.textContent = (Array.isArray(lista.tarjetas) ? lista.tarjetas.length : 0);
+    
+    // Menú kebab para columna
+    const menuDropdown = document.createElement('div');
+    menuDropdown.className = 'dropdown';
+    const menuButton = document.createElement('button');
+    menuButton.className = 'btn btn-sm btn-outline-light border-0 p-1';
+    menuButton.type = 'button';
+    menuButton.setAttribute('data-bs-toggle', 'dropdown');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Opciones de columna');
+    menuButton.innerHTML = `<i data-lucide="more-vertical" width="16" height="16" aria-hidden="true"></i>`;
+    
+    const menuList = document.createElement('ul');
+    menuList.className = 'dropdown-menu dropdown-menu-end';
+    menuList.innerHTML = `
+        <li><a class="dropdown-item renombrar-lista" href="#"><span class="me-2">✏️</span>Renombrar lista</a></li>
+        <li><a class="dropdown-item copiar-lista" href="#"><span class="me-2">📋</span>Copiar lista</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger eliminar-lista" href="#"><span class="me-2">🗑️</span>Eliminar lista</a></li>`;
+    
+    // Event listeners para las acciones del menú
+    menuList.querySelector('.renombrar-lista').addEventListener('click', (e) => {
+        e.preventDefault();
+        iniciarEdicionTituloLista(h2, lista);
+    });
+    
+    menuList.querySelector('.copiar-lista').addEventListener('click', (e) => {
+        e.preventDefault();
+        copiarLista(lista);
+    });
+    
+    menuList.querySelector('.eliminar-lista').addEventListener('click', (e) => {
+        e.preventDefault();
+        eliminarLista(lista, article);
+    });
+    
+    menuDropdown.appendChild(menuButton);
+    menuDropdown.appendChild(menuList);
+    
+    headerRight.appendChild(contador);
+    headerRight.appendChild(menuDropdown);
+    
     header.appendChild(h2);
-    header.appendChild(contador);
+    header.appendChild(headerRight);
 
     // Cuerpo
     const cuerpo = document.createElement('div');
@@ -355,36 +567,61 @@ function crearLista(lista) {
     contenidoScroll.appendChild(contTarjetas);
     cuerpo.appendChild(contenidoScroll);
 
-    // Pie con botón fijo
+    // Pie con botón fijo (fuera del área de scroll)
     const pie = document.createElement('div');
     pie.className = 'columna__pie';
     const btnNueva = document.createElement('button');
     btnNueva.className = 'tarjeta tarjeta--nueva';
     btnNueva.type = 'button';
-    btnNueva.innerHTML = `\n        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">\n          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />\n        </svg>\n        <span>Crear nueva tarea</span>`;
+    btnNueva.innerHTML = `\n        <i data-lucide="plus-circle" width="20" height="20" aria-hidden="true"></i>\n        <span>Crear nueva tarea</span>`;
     // Crear nueva tarjeta con edición inmediata del título
     btnNueva.addEventListener('click', () => {
-        const nuevaTarjeta = { id: Date.now().toString(), titulo: 'Nueva tarea', prioridad: 'baja', etiquetas: [] };
+        const nuevaTarjeta = {
+            id: Date.now().toString(),
+            titulo: 'Nueva tarea',
+            prioridad: 'baja',
+            etiquetas: [],
+            descripcion: ''
+        };
+        
+        // Añadir al estado
+        if (!Array.isArray(lista.tarjetas)) {
+            lista.tarjetas = [];
+        }
+        lista.tarjetas.push(nuevaTarjeta);
+        
         // Añadir al DOM y actualizar contador
         const nuevaCard = crearTarjeta(nuevaTarjeta);
         contTarjetas.appendChild(nuevaCard);
         const nuevoCont = contTarjetas.querySelectorAll('.tarjeta.card').length;
         contador.textContent = nuevoCont;
+        
         // Si antes estaba el mensaje vacío, eliminarlo
         const vacio = contTarjetas.querySelector('.vacio');
         if (vacio) vacio.remove();
+        
+        // Guardar estado
+        guardarEstadoTablero();
+        
         // Scroll to bottom para mostrar la nueva tarjeta
         contenidoScroll.scrollTop = contenidoScroll.scrollHeight;
-        // Iniciar edición del título automáticamente
-        const tituloElemento = nuevaCard.querySelector('.tarjeta__titulo');
-        iniciarEdicionTitulo(tituloElemento, nuevaTarjeta);
+
+        // Inicializar iconos de Lucide para la nueva tarjeta
+        setTimeout(() => {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+
+            // Iniciar edición del título automáticamente
+            const tituloElemento = nuevaCard.querySelector('.tarjeta__titulo');
+            iniciarEdicionTitulo(tituloElemento, nuevaTarjeta);
+        }, 50);
     });
 
     pie.appendChild(btnNueva);
-    cuerpo.appendChild(pie);
-
     article.appendChild(header);
     article.appendChild(cuerpo);
+    article.appendChild(pie);
 
     return article;
 }
@@ -411,21 +648,44 @@ function renderizarTablero(tablero) {
     const btnLista = document.createElement('button');
     btnLista.className = 'boton-nueva-lista btn';
     btnLista.type = 'button';
-    btnLista.innerHTML = `\n        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">\n          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />\n        </svg>\n        <span>Crear nueva lista</span>`;
-    // Evento mínimo para añadir lista
+    btnLista.innerHTML = `\n        <i data-lucide="plus-square" width="24" height="24" aria-hidden="true"></i>\n        <span>Crear nueva lista</span>`;
+    // Evento para añadir lista
     btnLista.addEventListener('click', () => {
         const nueva = { id: `lista-${Date.now()}`, titulo: 'Nueva lista', tarjetas: [] };
+        
+        // Añadir al estado del tablero
+        if (!estado.tablero.listas) {
+            estado.tablero.listas = [];
+        }
+        estado.tablero.listas.push(nueva);
+        
+        // Crear elemento DOM
         const nuevaLista = crearLista(nueva);
+        
         // Añadimos una animación de entrada
         nuevaLista.style.opacity = '0';
         nuevaLista.style.transform = 'translateY(10px)';
         contenedor.insertBefore(nuevaLista, colNueva);
         
+        // Guardar estado
+        guardarEstadoTablero();
+
         // Forzamos un reflow para que la animación funcione
         void nuevaLista.offsetWidth;
         nuevaLista.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
         nuevaLista.style.opacity = '1';
         nuevaLista.style.transform = 'translateY(0)';
+
+        // Inicializar iconos de Lucide para la nueva lista
+        setTimeout(() => {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+
+            // Focus en el título para editarlo
+            const tituloLista = nuevaLista.querySelector('.columna__titulo');
+            iniciarEdicionTituloLista(tituloLista, nueva);
+        }, 300);
     });
 
     cab.appendChild(btnLista);
@@ -433,6 +693,119 @@ function renderizarTablero(tablero) {
     contenedor.appendChild(colNueva);
 
     seccion.appendChild(contenedor);
+}
+
+// Función para cargar checklist en el modal
+function cargarChecklistEnModal(tarjeta) {
+    const checklistItems = document.querySelector('.checklist-items');
+    checklistItems.innerHTML = '';
+
+    // Si la tarjeta tiene checklist, cargarlo
+    if (tarjeta.checklist && Array.isArray(tarjeta.checklist)) {
+        tarjeta.checklist.forEach(item => {
+            const checklistItem = document.createElement('div');
+            checklistItem.className = 'checklist-item d-flex align-items-center gap-2 p-2 border rounded mb-2';
+            checklistItem.innerHTML = `
+                <input type="checkbox" class="form-check-input" ${item.completado ? 'checked' : ''}>
+                <span class="flex-grow-1 ${item.completado ? 'text-decoration-line-through text-muted' : ''}">${item.texto}</span>
+                <button type="button" class="btn btn-sm btn-outline-danger border-0 opacity-50">
+                    <i data-lucide="trash-2" width="14" height="14" aria-hidden="true"></i>
+                </button>
+            `;
+
+            // Evento para marcar como completado
+            const checkbox = checklistItem.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', () => {
+                const span = checklistItem.querySelector('span');
+                if (checkbox.checked) {
+                    span.classList.add('text-decoration-line-through', 'text-muted');
+                } else {
+                    span.classList.remove('text-decoration-line-through', 'text-muted');
+                }
+            });
+
+            // Evento para eliminar item
+            const deleteBtn = checklistItem.querySelector('button');
+            deleteBtn.addEventListener('click', () => {
+                checklistItem.remove();
+            });
+
+            checklistItems.appendChild(checklistItem);
+        });
+    } else {
+        // Si no hay checklist, el contenedor queda vacío
+        // Los usuarios pueden agregar items usando el botón "Añadir elemento"
+    }
+
+    // Inicializar iconos de Lucide para los nuevos elementos
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+    }, 50);
+}
+
+// Función para obtener checklist desde el modal
+function obtenerChecklistDesdeModal() {
+    const checklistItems = document.querySelectorAll('.checklist-item');
+    const checklist = [];
+
+    checklistItems.forEach((item, index) => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        const span = item.querySelector('span');
+        const texto = span.textContent.trim();
+
+        if (texto) {
+            checklist.push({
+                id: `temp-${Date.now()}-${index}`,
+                texto: texto,
+                completado: checkbox.checked
+            });
+        }
+    });
+
+    return checklist;
+}
+
+// Función para añadir nuevo item al checklist
+function agregarItemChecklist(texto = 'Nueva subtarea') {
+    const checklistItems = document.querySelector('.checklist-items');
+    const checklistItem = document.createElement('div');
+    checklistItem.className = 'checklist-item d-flex align-items-center gap-2 p-2 border rounded mb-2';
+
+    checklistItem.innerHTML = `
+        <input type="checkbox" class="form-check-input">
+        <span class="flex-grow-1">${texto}</span>
+        <button type="button" class="btn btn-sm btn-outline-danger border-0 opacity-50">
+            <i data-lucide="trash-2" width="14" height="14" aria-hidden="true"></i>
+        </button>
+    `;
+
+    // Evento para marcar como completado
+    const checkbox = checklistItem.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', () => {
+        const span = checklistItem.querySelector('span');
+        if (checkbox.checked) {
+            span.classList.add('text-decoration-line-through', 'text-muted');
+        } else {
+            span.classList.remove('text-decoration-line-through', 'text-muted');
+        }
+    });
+
+    // Evento para eliminar item
+    const deleteBtn = checklistItem.querySelector('button');
+    deleteBtn.addEventListener('click', () => {
+        checklistItem.remove();
+    });
+
+    checklistItems.appendChild(checklistItem);
+
+    // Inicializar iconos de Lucide
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+    }, 50);
 }
 
 // Función principal para inicializar la aplicación
@@ -449,6 +822,13 @@ async function inicializarAplicacion() {
     if (tablero) {
         estado.tablero = tablero;
         renderizarTablero(tablero);
+
+        // Inicializar iconos después de renderizar
+        setTimeout(() => {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        }, 50);
     }
 
     // Modal: eventos de UI
@@ -462,29 +842,7 @@ async function inicializarAplicacion() {
         }
     });
 
-    const togglePreview = document.getElementById('toggle-preview');
-    const textarea = document.getElementById('campo-descripcion');
-    const preview = document.getElementById('preview-descripcion');
     const inputEtiquetas = document.getElementById('campo-etiquetas');
-
-    if (togglePreview && textarea && preview) {
-        togglePreview.addEventListener('change', (e) => {
-            const mostrar = e.target.checked;
-            if (mostrar) {
-                preview.classList.remove('d-none');
-                textarea.classList.add('d-none');
-                preview.innerHTML = marked.parse(textarea.value || '');
-            } else {
-                preview.classList.add('d-none');
-                textarea.classList.remove('d-none');
-            }
-        });
-        textarea.addEventListener('input', () => {
-            if (!preview.classList.contains('d-none')) {
-                preview.innerHTML = marked.parse(textarea.value || '');
-            }
-        });
-    }
 
     // Preview de etiquetas en tiempo real
     if (inputEtiquetas) {
@@ -494,3 +852,13 @@ async function inicializarAplicacion() {
 
 // Ejecutar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', inicializarAplicacion);
+
+// Inicializar Lucide Icons después de que se cargue la aplicación
+document.addEventListener('DOMContentLoaded', () => {
+    // Pequeño delay para asegurar que todos los elementos estén renderizados
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+    }, 100);
+});
