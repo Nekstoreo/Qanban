@@ -28,6 +28,11 @@
   - [✨ Características](#-características)
   - [🎮 Demo](#-demo)
     - [👉 Abre `index.html` en tu navegador para ver la maqueta completa](#-abre-indexhtml-en-tu-navegador-para-ver-la-maqueta-completa)
+    - [📋 Funcionalidades Demostradas](#-funcionalidades-demostradas)
+    - [📊 Proyecto de Ejemplo: E-Commerce Sprint 24](#-proyecto-de-ejemplo-e-commerce-sprint-24)
+      - [📈 **Estado del Proyecto:**](#-estado-del-proyecto)
+      - [🎯 **Columnas del Proyecto:**](#-columnas-del-proyecto)
+      - [🚀 **Features Destacadas:**](#-features-destacadas)
   - [🔧 Instalación](#-instalación)
   - [🤝 Contribuciones](#-contribuciones)
   - [📄 Licencia](#-licencia)
@@ -102,7 +107,61 @@ Qanban/
 
 ### 👉 Abre `index.html` en tu navegador para ver la maqueta completa
 
+**Proyecto de ejemplo:** E-Commerce Sprint 24 con todas las funcionalidades implementadas
+
 </div>
+
+### 📋 Funcionalidades Demostradas
+
+<div align="center">
+
+| Funcionalidad | Estado | Descripción |
+|---------------|--------|-------------|
+| ✅ **CRUD Completo** | Funcional | Crear, leer, actualizar y eliminar tarjetas y listas |
+| ✅ **Persistencia** | LocalStorage | Datos guardados automáticamente |
+| ✅ **Sistema de Prioridades** | 3 niveles | Alta, Media, Baja con indicadores visuales |
+| ✅ **Estimaciones** | Poker Planning | Sistema de estimación con puntos |
+| ✅ **Fechas Límite** | Calendario | Fechas con formato español |
+| ✅ **Etiquetas** | Categorización | Sistema de etiquetas coloreadas |
+| ✅ **Subtareas** | Checklist | Seguimiento de progreso |
+| ✅ **Descripciones** | Texto plano | Descripciones detalladas |
+| ✅ **Tema Oscuro** | Automático | Modo claro/oscuro |
+| ✅ **Responsive** | Móvil | Diseño adaptativo |
+| ✅ **Accesibilidad** | WCAG | Etiquetas ARIA y navegación |
+
+</div>
+
+### 📊 Proyecto de Ejemplo: E-Commerce Sprint 24
+
+<div align="center">
+
+**🏪 Plataforma de E-Commerce en Desarrollo**
+
+</div>
+
+#### 📈 **Estado del Proyecto:**
+- **26 tareas totales** distribuidas en **7 columnas especializadas**
+- **Backlog rico** con features avanzadas planeadas
+- **Trabajo en progreso** con diferentes niveles de completitud
+- **Sistema de QA integrado** con testing dedicado
+- **Gestión de dependencias** con estados bloqueados
+
+#### 🎯 **Columnas del Proyecto:**
+1. **Backlog** (9 tareas) - Planificación y features pendientes
+2. **To Do** (4 tareas) - Listas para desarrollo inmediato
+3. **In Progress** (3 tareas) - Trabajo activo del equipo
+4. **Code Review** (2 tareas) - Validación de calidad
+5. **Testing & QA** (3 tareas) - Aseguramiento de calidad
+6. **Blocked** (2 tareas) - Detenidas por dependencias
+7. **Done** (3 tareas) - Features completadas
+
+#### 🚀 **Features Destacadas:**
+- Sistema de reseñas con moderación
+- API de recomendaciones con ML
+- Dashboard de administrador completo
+- Autenticación OAuth múltiple
+- Sistema de cupones y promociones
+- PWA con modo offline
 
 ## 🔧 Instalación
 
