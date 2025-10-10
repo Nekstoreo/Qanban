@@ -1,143 +1,25 @@
 {
   "tablero": {
-    "nombre": "Proyecto E-Commerce - Sprint 24",
+    "nombre": "Mi Tienda Online - Sprint 3",
     "listas": [
       {
         "id": "backlog",
         "titulo": "Backlog",
         "tarjetas": [
           {
-            "id": "1",
-            "titulo": "Implementar sistema de reseñas de productos",
-            "prioridad": "alta",
-            "etiquetas": [
-              "frontend",
-              "backend",
-              "reviews",
-              "ux",
-              "database"
-            ],
-            "descripcion": "Sistema completo de reseñas con calificaciones, comentarios y moderación",
-            "fecha": "2025-09-25",
-            "pokerPlanning": "8",
-            "checklist": [
-              {
-                "id": "1-1",
-                "texto": "Crear modelo de datos para reseñas",
-                "completado": true
-              },
-              {
-                "id": "1-2",
-                "texto": "Implementar API de reseñas",
-                "completado": true
-              },
-              {
-                "id": "1-3",
-                "texto": "Crear interfaz de usuario",
-                "completado": false
-              },
-              {
-                "id": "1-4",
-                "texto": "Implementar moderación",
-                "completado": false
-              }
-            ]
-          },
-          {
-            "id": "2",
-            "titulo": "Optimizar carga de imágenes de producto",
-            "prioridad": "media",
-            "etiquetas": [
-              "performance",
-              "images",
-              "optimization"
-            ],
-            "descripcion": "Implementar lazy loading, WebP y CDN para mejor UX"
-          },
-          {
-            "id": "3",
-            "titulo": "Añadir soporte para múltiples idiomas",
-            "prioridad": "media",
-            "etiquetas": [
-              "i18n",
-              "frontend"
-            ],
-            "descripcion": "Soporte completo para español, inglés y portugués",
-            "fecha": "2025-09-22",
-            "pokerPlanning": "5"
-          },
-          {
-            "id": "4",
-            "titulo": "Implementar analytics avanzado",
-            "prioridad": "baja",
-            "etiquetas": [
-              "analytics",
-              "tracking",
-              "metrics"
-            ],
-            "descripcion": "Dashboard con métricas de usuario y conversión"
-          },
-          {
             "id": "5",
-            "titulo": "Crear API de recomendaciones",
+            "titulo": "Crear API de recomendaciones personalizadas",
             "prioridad": "media",
             "etiquetas": [
               "backend",
               "api",
               "ml",
-              "ai",
-              "data",
-              "analytics",
-              "performance"
+              "analytics"
             ],
-            "descripcion": "Sistema de recomendaciones basado en comportamiento del usuario",
-            "fecha": "2025-10-01",
-            "pokerPlanning": "40"
-          },
-          {
-            "id": "6",
-            "titulo": "Refactorizar componente de carrito",
-            "prioridad": "media",
-            "etiquetas": [
-              "refactor",
-              "frontend",
-              "cart"
-            ],
-            "descripcion": "Mejorar arquitectura y reducir complejidad del componente",
-            "pokerPlanning": "2"
-          },
-          {
-            "id": "7",
-            "titulo": "Implementar PWA features",
-            "prioridad": "baja",
-            "etiquetas": [
-              "pwa",
-              "offline",
-              "mobile"
-            ],
-            "descripcion": "Service worker, manifest y modo offline"
-          },
-          {
-            "id": "8",
-            "titulo": "Crear sistema de cupones y descuentos",
-            "prioridad": "alta",
-            "etiquetas": [
-              "coupons",
-              "discounts",
-              "backend"
-            ],
-            "descripcion": "Sistema flexible de promociones y códigos de descuento"
-          },
-          {
-            "id": "9",
-            "titulo": "Actualizar documentación técnica",
-            "prioridad": "baja",
-            "etiquetas": [
-              "docs",
-              "api",
-              "readme"
-            ],
-            "descripcion": "Documentar nuevas APIs y actualizar guías"
+            "descripcion": "Implementar sistema de recomendaciones basado en el historial de navegación y compras previas. Usar algoritmo de filtrado colaborativo y validar con datos históricos. Considerar integración con servicio externo o desarrollo propio.",
+            "fecha": "2025-10-20",
+            "pokerPlanning": "40",
+            "notas": "Podría empezar con una versión básica (13 pts) antes del sistema completo"
           }
         ]
       },
@@ -146,41 +28,19 @@
         "titulo": "To Do",
         "tarjetas": [
           {
-            "id": "10",
-            "titulo": "Corregir bug en validación de formularios",
+            "id": "8",
+            "titulo": "Sistema de cupones y descuentos por temporada",
             "prioridad": "alta",
             "etiquetas": [
-              "bug",
-              "forms",
-              "validation"
+              "coupons",
+              "discounts",
+              "backend",
+              "marketing"
             ],
-            "descripcion": "Error en validación de email en checkout",
-            "fecha": "2025-09-15",
-            "pokerPlanning": "1"
-          },
-          {
-            "id": "11",
-            "titulo": "Implementar filtros de búsqueda avanzada",
-            "prioridad": "media",
-            "etiquetas": [
-              "search",
-              "filters",
-              "ux"
-            ],
-            "descripcion": "Filtros por precio, categoría, marca y características",
-            "fecha": "2025-09-18",
-            "pokerPlanning": "?"
-          },
-          {
-            "id": "12",
-            "titulo": "Crear componente de comparación de productos",
-            "prioridad": "media",
-            "etiquetas": [
-              "comparison",
-              "frontend",
-              "products"
-            ],
-            "descripcion": "Vista lado a lado para comparar hasta 4 productos"
+            "descripcion": "Desarrollar un sistema flexible de promociones con códigos de descuento, cupones temporales y descuentos automáticos por volumen. Debe incluir validación de fechas y compatibilidad entre promociones.",
+            "fecha": "2025-10-15",
+            "pokerPlanning": "13",
+            "notas": "Debo comenzar la próxima semana para cumplir con la fecha prevista"
           },
           {
             "id": "13",
@@ -189,10 +49,29 @@
             "etiquetas": [
               "database",
               "performance",
-              "optimization"
+              "optimization",
+              "mongodb"
             ],
-            "descripcion": "Reducir tiempo de respuesta de búsquedas en 40%",
-            "pokerPlanning": "20"
+            "descripcion": "Reducir tiempo de respuesta de búsquedas en catálogo. Actualmente toma 2.5s en promedio con 10,000 productos. Meta: reducir a menos de 1s. Considerar índices, caching y optimización de queries.",
+            "fecha": "2025-10-18",
+            "pokerPlanning": "20",
+            "notas": "Tengo que revisar las consultas más frecuentes para priorizar optimizaciones"
+          },
+          {
+            "id": "22",
+            "titulo": "Integración con pasarela de pagos Stripe",
+            "prioridad": "alta",
+            "etiquetas": [
+              "payment",
+              "integration",
+              "blocked",
+              "security"
+            ],
+            "descripcion": "Esperando credenciales de producción de Stripe para completar integración. Ya están implementados los webhooks y el flujo de pago en ambiente de prueba. Faltan pruebas de seguridad con tarjetas reales.",
+            "fecha": "2025-10-16",
+            "pokerPlanning": "13",
+            "bloqueado": "Pendiente de respuesta del equipo financiero. Se espera resolución el 11/10. Si no hay respuesta, contactaré directamente a Stripe el 12/10.",
+            "notas": "Todo el desarrollo previo está listo, solo falta la integración final con credenciales de producción"
           }
         ]
       },
@@ -201,25 +80,109 @@
         "titulo": "In Progress",
         "tarjetas": [
           {
+            "id": "10",
+            "titulo": "Corregir bug en validación de formularios",
+            "prioridad": "alta",
+            "etiquetas": [
+              "bug",
+              "forms",
+              "validation",
+              "checkout"
+            ],
+            "descripcion": "Error en validación de email en checkout que permite emails sin dominio válido. Identificado después de que 3 usuarios reportaran problemas para recibir confirmaciones. Revisar también otros campos del formulario.",
+            "fecha": "2025-10-12",
+            "pokerPlanning": "3",
+            "progreso": "30%",
+            "checklist": [
+              {
+                "id": "10-1",
+                "texto": "Revisar la expresión regular de validación actual",
+                "completado": true
+              },
+              {
+                "id": "10-2",
+                "texto": "Implementar corrección y pruebas unitarias",
+                "completado": false
+              },
+              {
+                "id": "10-3",
+                "texto": "Verificar otros campos del formulario",
+                "completado": false
+              }
+            ],
+            "notas": "Encontrada la causa: validación incorrecta del TLD. Trabajando en la solución."
+          },
+          {
+            "id": "1",
+            "titulo": "Sistema de reseñas de productos",
+            "prioridad": "alta",
+            "etiquetas": [
+              "frontend",
+              "backend",
+              "reviews",
+              "ux"
+            ],
+            "descripcion": "Implementar sistema completo de reseñas con calificación por estrellas, comentarios de texto, subida de fotos y moderación básica. Debe incluir ordenamiento y filtrado de reseñas.",
+            "fecha": "2025-10-13",
+            "pokerPlanning": "8",
+            "progreso": "60%",
+            "checklist": [
+              {
+                "id": "1-1",
+                "texto": "Crear modelo de datos para reseñas",
+                "completado": true
+              },
+              {
+                "id": "1-2",
+                "texto": "Implementar API de reseñas (CRUD)",
+                "completado": true
+              },
+              {
+                "id": "1-3",
+                "texto": "Desarrollar componentes frontend",
+                "completado": true
+              },
+              {
+                "id": "1-4",
+                "texto": "Implementar sistema de moderación",
+                "completado": false
+              },
+              {
+                "id": "1-5",
+                "texto": "Añadir soporte para fotos en reseñas",
+                "completado": false
+              },
+              {
+                "id": "1-6",
+                "texto": "Pruebas de integración",
+                "completado": false
+              }
+            ],
+            "notas": "Encontré un bug con la actualización de las estrellas, revisarlo mañana"
+          },
+          {
             "id": "14",
             "titulo": "Implementar autenticación con OAuth",
             "prioridad": "alta",
             "etiquetas": [
               "auth",
               "oauth",
-              "security"
+              "security",
+              "ux"
             ],
-            "descripcion": "Login con Google, Facebook y GitHub",
-            "fecha": "2025-09-12",
+            "descripcion": "Implementar login con Google, Facebook y GitHub para reducir fricción en proceso de registro. Debe mantener consistencia con el sistema actual de usuarios y evitar duplicados.",
+            "fecha": "2025-10-11",
+            "pokerPlanning": "13",
+            "progreso": "80%",
             "checklist": [
               {
                 "id": "14-1",
-                "texto": "Configurar OAuth providers",
+                "texto": "Configurar OAuth providers (Google, FB)",
                 "completado": true
               },
               {
                 "id": "14-2",
-                "texto": "Implementar flujo de login",
+                "texto": "Implementar flujo de login frontend",
                 "completado": true
               },
               {
@@ -229,138 +192,21 @@
               },
               {
                 "id": "14-4",
-                "texto": "Testing de seguridad",
+                "texto": "Testing de seguridad (penetration)",
                 "completado": false
               },
               {
                 "id": "14-5",
                 "texto": "Documentar API endpoints",
                 "completado": false
+              },
+              {
+                "id": "14-6",
+                "texto": "Añadir soporte para GitHub OAuth",
+                "completado": false
               }
-            ]
-          },
-          {
-            "id": "15",
-            "titulo": "Crear dashboard de administrador",
-            "prioridad": "media",
-            "etiquetas": [
-              "admin",
-              "dashboard",
-              "backend"
             ],
-            "descripcion": "Panel completo para gestión de productos y usuarios",
-            "fecha": "2025-09-20",
-            "pokerPlanning": "5"
-          },
-          {
-            "id": "16",
-            "titulo": "Implementar sistema de notificaciones push",
-            "prioridad": "media",
-            "etiquetas": [
-              "notifications",
-              "push",
-              "mobile"
-            ],
-            "descripcion": "Notificaciones en tiempo real para pedidos y promociones"
-          }
-        ]
-      },
-      {
-        "id": "code-review",
-        "titulo": "Code Review",
-        "tarjetas": [
-          {
-            "id": "17",
-            "titulo": "Revisar implementación de checkout",
-            "prioridad": "alta",
-            "etiquetas": [
-              "review",
-              "checkout",
-              "payment"
-            ],
-            "descripcion": "Code review para proceso de pago seguro",
-            "fecha": "2025-09-14"
-          },
-          {
-            "id": "18",
-            "titulo": "Validar refactor de componente Header",
-            "prioridad": "media",
-            "etiquetas": [
-              "review",
-              "refactor",
-              "header"
-            ],
-            "descripcion": "Revisar cambios en navegación principal"
-          }
-        ]
-      },
-      {
-        "id": "testing",
-        "titulo": "Testing & QA",
-        "tarjetas": [
-          {
-            "id": "19",
-            "titulo": "Testing end-to-end de flujo de compra",
-            "prioridad": "alta",
-            "etiquetas": [
-              "testing",
-              "e2e",
-              "checkout"
-            ],
-            "descripcion": "Pruebas completas del proceso de compra",
-            "fecha": "2025-09-16"
-          },
-          {
-            "id": "20",
-            "titulo": "Pruebas de carga del servidor",
-            "prioridad": "media",
-            "etiquetas": [
-              "testing",
-              "performance",
-              "load"
-            ],
-            "descripcion": "Simular 1000 usuarios concurrentes",
-            "fecha": "2025-09-17"
-          },
-          {
-            "id": "21",
-            "titulo": "Validación de accesibilidad WCAG",
-            "prioridad": "media",
-            "etiquetas": [
-              "a11y",
-              "testing",
-              "wcag"
-            ],
-            "descripcion": "Auditoría completa de accesibilidad"
-          }
-        ]
-      },
-      {
-        "id": "blocked",
-        "titulo": "Blocked",
-        "tarjetas": [
-          {
-            "id": "22",
-            "titulo": "Integración con pasarela de pagos",
-            "prioridad": "alta",
-            "etiquetas": [
-              "payment",
-              "integration",
-              "blocked"
-            ],
-            "descripcion": "Esperando credenciales de producción de Stripe",
-            "fecha": "2025-09-10"
-          },
-          {
-            "id": "23",
-            "titulo": "Implementar tracking avanzado",
-            "prioridad": "media",
-            "etiquetas": [
-              "analytics",
-              "tracking",
-              "blocked"
-            ],
-            "descripcion": "Bloqueado por aprobación de privacidad"
+            "notas": "La integración con Facebook está dando problemas con permisos de API v12"
           }
         ]
       },
@@ -369,72 +215,138 @@
         "titulo": "Done",
         "tarjetas": [
           {
+            "id": "19",
+            "titulo": "Testing del flujo de compra",
+            "prioridad": "alta",
+            "etiquetas": [
+              "testing",
+              "e2e",
+              "checkout",
+              "cypress"
+            ],
+            "descripcion": "Implementación de tests end-to-end para el flujo completo de compra usando Cypress. Incluye pruebas con diferentes métodos de pago, cupones y situaciones de error.",
+            "fecha": "2025-10-05",
+            "pokerPlanning": "8",
+            "completado": "2025-10-08",
+            "checklist": [
+              {
+                "id": "19-1",
+                "texto": "Configurar entorno de testing con datos de prueba",
+                "completado": true
+              },
+              {
+                "id": "19-2",
+                "texto": "Implementar tests de flujo básico",
+                "completado": true
+              },
+              {
+                "id": "19-3",
+                "texto": "Añadir casos de prueba para errores y casos límite",
+                "completado": true
+              },
+              {
+                "id": "19-4",
+                "texto": "Integrar con pipeline CI",
+                "completado": true
+              }
+            ],
+            "notas": "Todos los tests pasan correctamente. Se identificaron 2 bugs menores que ya fueron corregidos."
+          },
+          {
             "id": "24",
-            "titulo": "Implementar responsive design",
+            "titulo": "Implementar diseño responsive",
             "prioridad": "alta",
             "etiquetas": [
               "responsive",
               "mobile",
-              "css"
+              "css",
+              "ux"
             ],
-            "descripcion": "Diseño adaptativo para todos los dispositivos",
-            "fecha": "2025-09-08",
+            "descripcion": "Diseño adaptativo para todos los dispositivos, con enfoque mobile-first y soporte específico para tablets. Mejora de experiencia de navegación en móviles con controles optimizados para touch.",
+            "fecha": "2025-09-28",
+            "pokerPlanning": "13",
+            "completado": "2025-10-03",
             "checklist": [
               {
                 "id": "24-1",
-                "texto": "Análisis de breakpoints",
+                "texto": "Análisis de breakpoints y diseños actuales",
                 "completado": true
               },
               {
                 "id": "24-2",
-                "texto": "Implementar CSS Grid",
+                "texto": "Implementar CSS Grid y Flexbox",
                 "completado": true
               },
               {
                 "id": "24-3",
-                "texto": "Crear componentes móviles",
+                "texto": "Optimizar componentes para móviles",
                 "completado": true
               },
               {
                 "id": "24-4",
-                "texto": "Testing en múltiples dispositivos",
+                "texto": "Testing en múltiples dispositivos y navegadores",
                 "completado": true
               },
               {
                 "id": "24-5",
-                "texto": "Optimización de imágenes",
+                "texto": "Optimización de imágenes responsive",
                 "completado": true
               },
               {
                 "id": "24-6",
-                "texto": "Documentación de estilos",
+                "texto": "Documentación de estilos y componentes",
                 "completado": true
               }
-            ]
-          },
-          {
-            "id": "25",
-            "titulo": "Crear sistema de favoritos",
-            "prioridad": "media",
-            "etiquetas": [
-              "favorites",
-              "ux",
-              "frontend"
             ],
-            "descripcion": "Lista de deseos persistente",
-            "fecha": "2025-09-05"
+            "notas": "El diseño ahora funciona perfectamente en dispositivos iOS, Android y tablets. Mejoró la puntuación de mobile en Lighthouse de 72 a 94."
           },
           {
             "id": "26",
-            "titulo": "Optimizar Core Web Vitals",
+            "titulo": "Optimización de Core Web Vitals",
             "prioridad": "alta",
             "etiquetas": [
               "performance",
               "seo",
-              "optimization"
+              "optimization",
+              "metrics"
             ],
-            "descripcion": "Mejorar puntuaciones de Lighthouse",
-            "fecha": "2025-09-01"
+            "descripcion": "Mejora de métricas de rendimiento web según estándares de Google. Enfoque en LCP, CLS y FID para mejorar posicionamiento y experiencia de usuario. Optimización de carga y renderizado.",
+            "fecha": "2025-09-25",
+            "pokerPlanning": "20",
+            "completado": "2025-09-29",
+            "checklist": [
+              {
+                "id": "26-1",
+                "texto": "Auditoría inicial con Lighthouse y PageSpeed",
+                "completado": true
+              },
+              {
+                "id": "26-2",
+                "texto": "Optimización de imágenes con lazy loading",
+                "completado": true
+              },
+              {
+                "id": "26-3",
+                "texto": "Implementación de código CSS crítico",
+                "completado": true
+              },
+              {
+                "id": "26-4",
+                "texto": "Minimización y compresión de recursos",
+                "completado": true
+              },
+              {
+                "id": "26-5",
+                "texto": "Optimización de fuentes web",
+                "completado": true
+              },
+              {
+                "id": "26-6",
+                "texto": "Configuración de caching y CDN",
+                "completado": true
+              }
+            ],
+            "notas": "Se logró mejorar el LCP de 3.2s a 1.5s y el CLS de 0.25 a 0.05. Todas las métricas ahora están en verde."
           }
         ]
       }
