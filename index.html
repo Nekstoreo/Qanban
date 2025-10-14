@@ -18,6 +18,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" />
 </head>
 
 <body>
@@ -39,7 +40,7 @@
             <i data-lucide="moon" width="18" height="18" aria-hidden="true"></i>
             <span class="boton__etiqueta">Tema</span>
           </button>
-          <button class="boton boton-primario btn btn-sm d-inline-flex align-items-center" disabled>
+          <button id="nuevo-tablero" class="boton boton-primario btn btn-sm d-inline-flex align-items-center">
             <i data-lucide="plus" width="18" height="18" aria-hidden="true"></i>
             <span class="boton__etiqueta">Nuevo Tablero</span>
           </button>
@@ -51,6 +52,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="#"><span class="me-2">📤</span>Exportar Tablero</a></li>
+              <li><a id="importar-json-trigger" class="dropdown-item" href="#"><span class="me-2">📥</span>Importar Tablero</a></li>
               <li><a class="dropdown-item" href="#"><span class="me-2">⚙️</span>Configuración</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#"><span class="me-2">ℹ️</span>Acerca de</a></li>
@@ -60,6 +62,8 @@
       </div>
     </div>
   </header>
+  <!-- Input oculto para importar JSON -->
+  <input type="file" id="importar-json-input" accept="application/json" style="display:none;" />
 
   <main class="contenedor container-fluid my-0">
     <!-- Contenedor vacío; será poblado por JavaScript desde data/tablero.json -->
@@ -151,6 +155,35 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button id="btn-guardar-tarjeta" type="button" class="btn btn-primary">Guardar</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Acerca de -->
+  <div class="modal fade" id="modalAcerca" tabindex="-1" aria-labelledby="modalAcercaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content acerca-modal-content text-center py-3">
+        <div class="modal-header border-0 justify-content-center">
+          <h5 class="modal-title w-100 text-primary fw-bold" id="modalAcercaLabel">
+            <img src="./assets/logos/logo.png" alt="Qanban" class="mb-2" width="48" height="48" style="border-radius:12px;box-shadow:var(--shadow-md);background:white;">
+            <div>Qanban</div>
+          </h5>
+          <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body pb-1">
+          <p class="fs-5 mb-2">Tablero Kanban Web</p>
+          <span class="badge rounded-pill bg-primary mb-3">Open Source</span>
+          <ul class="list-unstyled mb-3">
+            <li class="mb-1"><strong>Desarrollador:</strong> nekstoreo</li>
+            <li class="mb-1"><strong>Año:</strong> 2025</li>
+            <li class="mb-1"><strong>Stack:</strong> Vanilla JS · Bootstrap 5 · jQuery</li>
+          </ul>
+          <p class="mb-3 text-secondary">Gestión de tareas simple bajo metodología Kanban para personas y equipos pequeños.</p>
+          <a href="https://github.com/nekstoreo/kanban" target="_blank" class="btn btn-outline-dark btn-sm px-3"><i class="bi bi-github me-1"></i>Repositorio en GitHub</a>
+        </div>
+        <div class="modal-footer border-0 justify-content-center pt-2">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
