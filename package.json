@@ -1,0 +1,11 @@
+{
+  "name": "qanban",
+  "version": "1.0.0",
+  "description": "Tablero Kanban web gestionado desde scripts y recursos estáticos",
+  "scripts": {
+    "start": "serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.0.1"
+  }
+}
