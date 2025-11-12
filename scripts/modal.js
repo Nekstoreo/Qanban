@@ -4,12 +4,14 @@ function abrirModalDetalle(tarjeta, cardElemento) {
     
     // Usar jQuery para obtener y setear valores
     $('#campo-titulo').val(tarjeta.titulo || '');
-    $('#campo-etiquetas').val((tarjeta.etiquetas || []).join(', '));
     $('#campo-prioridad').val(tarjeta.prioridad || 'baja');
     $('#campo-poker-planning').val(tarjeta.pokerPlanning || '');
     $('#campo-fecha').val(tarjeta.fecha ? new Date(tarjeta.fecha).toISOString().slice(0,10) : '');
     $('#campo-descripcion').val(tarjeta.descripcion || '');
     
+    // Inicializar etiquetas del modal
+    etiquetasDelModal = Array.isArray(tarjeta.etiquetas) ? [...tarjeta.etiquetas] : [];
+    $('#campo-etiquetas').val('');
     actualizarPreviewEtiquetas();
 
     // Cargar checklist
@@ -29,14 +31,13 @@ function guardarTarjetaDesdeModal() {
     
     // Usar jQuery para obtener valores
     const titulo = $('#campo-titulo').val().trim() || 'Sin título';
-    const etiquetas = $('#campo-etiquetas').val().split(',').map(e => e.trim()).filter(Boolean);
     const prioridad = $('#campo-prioridad').val();
     const pokerPlanning = $('#campo-poker-planning').val();
     const fecha = $('#campo-fecha').val();
     const descripcion = $('#campo-descripcion').val();
 
     tarjeta.titulo = titulo;
-    tarjeta.etiquetas = etiquetas;
+    tarjeta.etiquetas = etiquetasDelModal;
     tarjeta.prioridad = prioridad;
     tarjeta.pokerPlanning = pokerPlanning || '';
     tarjeta.fecha = fecha || undefined;

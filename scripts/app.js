@@ -31,8 +31,19 @@ async function inicializarAplicacion() {
         }
     });
 
-    // Preview de etiquetas en tiempo real usando jQuery
-    $('#campo-etiquetas').on('input', actualizarPreviewEtiquetas);
+    // Evento para agregar etiqueta
+    $('#btn-agregar-etiqueta').on('click', agregarEtiqueta);
+    
+    // Permitir agregar etiqueta con Enter
+    $('#campo-etiquetas').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            agregarEtiqueta();
+        }
+    });
+    
+    // Limitar caracteres en tiempo real (escritura, pega, etc)
+    $('#campo-etiquetas').on('input paste', limitarCaracteresEtiqueta);
 }
 
 // Ejecutar cuando el DOM esté listo usando jQuery

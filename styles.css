@@ -43,6 +43,10 @@
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.55), 0 4px 6px -2px rgba(0,0,0,0.45);
 }
 
+:root.dark body {
+  background: linear-gradient(135deg, #060A18 0%, #1B2640 50%, #0E1B35 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -60,7 +64,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--background);
+  background: linear-gradient(135deg, #F0F4FF 0%, #E8ECFF 50%, #D4D8FF 100%);
   color: var(--text-primary);
   font-family: "Roboto", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -473,15 +477,22 @@ main.contenedor {
   color: var(--text-secondary);
   border: 1px solid var(--border-light);
   transition: all var(--transition-base);
+  padding: 0.4rem 0.65rem;
+  max-width: 200px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .etiqueta-chip:hover {
   background: var(--surface-hover);
   border-color: var(--primary-light);
+  color: var(--primary);
 }
 
 .etiqueta-chip .btn-close {
   opacity: 0.6;
+  padding: 0;
+  margin-left: 0.25rem;
 }
 
 .etiqueta-chip:hover .btn-close {
@@ -507,7 +518,7 @@ main.contenedor {
 }
 
 .columna--nueva {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7 );
   border: 2px dashed var(--border-light);
   box-shadow: none;
   display: grid;
@@ -696,6 +707,33 @@ main.contenedor {
   box-shadow: 0 0 0 0.2rem rgba(94, 86, 231, 0.25);
 }
 
+/* Estilos para input-group de etiquetas */
+#campo-etiquetas {
+  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+}
+
+#btn-agregar-etiqueta {
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  border-color: var(--border-light);
+  color: var(--primary);
+  transition: all var(--transition-base);
+}
+
+#btn-agregar-etiqueta:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+#btn-agregar-etiqueta:focus {
+  box-shadow: none;
+}
+
+:root.dark #btn-agregar-etiqueta {
+  border-color: var(--border-light);
+  background: transparent;
+}
+
 /* Tema oscuro para badges */
 :root.dark .badge {
   background: var(--surface);
@@ -719,6 +757,7 @@ main.contenedor {
 :root.dark .etiqueta-chip:hover {
   background: var(--surface-hover);
   border-color: var(--primary-light);
+  color: var(--primary);
 }
 
 
@@ -1071,12 +1110,6 @@ main.contenedor {
 /* Estilos para Drag and Drop */
 .tarjeta.card[draggable="true"] {
   user-select: none;
-}
-
-.tarjeta-arrastrada {
-  opacity: 0.5 !important;
-  transform: scale(1.05) !important;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .tarjeta.card {
