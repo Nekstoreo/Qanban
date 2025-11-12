@@ -44,7 +44,7 @@
 }
 
 :root.dark body {
-  background: linear-gradient(135deg, #060A18 0%, #1B2640 50%, #0E1B35 100%);
+  background: linear-gradient(135deg, #0F1B3A 0%, #1A1F3A 50%, #1B1A35 100%);
 }
 
 * {
