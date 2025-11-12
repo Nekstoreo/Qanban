@@ -1041,24 +1041,24 @@ main.contenedor {
 
 .poker-planning-indicator.poker-13,
 .poker-planning-indicator.poker-20 {
-  background: #EF4444; /* Rojo - complejo */
+  background: #F97316; /* Naranja - complicado */
   color: white;
 }
 
 .poker-planning-indicator.poker-13:hover,
 .poker-planning-indicator.poker-20:hover {
-  background: #DC2626;
+  background: #EA580C;
 }
 
 .poker-planning-indicator.poker-40,
 .poker-planning-indicator.poker-100 {
-  background: #7C3AED; /* Morado oscuro - muy complejo */
+  background: #DC2626; /* Rojo - muy complicado */
   color: white;
 }
 
 .poker-planning-indicator.poker-40:hover,
 .poker-planning-indicator.poker-100:hover {
-  background: #6D28D9;
+  background: #B91C1C;
 }
 
 .poker-planning-indicator.poker-unknown {
@@ -1099,25 +1099,25 @@ main.contenedor {
 
 :root.dark .poker-planning-indicator.poker-13,
 :root.dark .poker-planning-indicator.poker-20 {
-  background: #F87171;
-  color: #991B1B;
+  background: #FB923C;
+  color: #7C2D12;
 }
 
 :root.dark .poker-planning-indicator.poker-13:hover,
 :root.dark .poker-planning-indicator.poker-20:hover {
-  background: #EF4444;
+  background: #F97316;
   color: white;
 }
 
 :root.dark .poker-planning-indicator.poker-40,
 :root.dark .poker-planning-indicator.poker-100 {
-  background: #A78BFA;
-  color: #4C1D95;
+  background: #F87171;
+  color: #7F1D1D;
 }
 
 :root.dark .poker-planning-indicator.poker-40:hover,
 :root.dark .poker-planning-indicator.poker-100:hover {
-  background: #7C3AED;
+  background: #EF4444;
   color: white;
 }
 

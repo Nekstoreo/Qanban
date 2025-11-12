@@ -16,7 +16,7 @@
               "ml",
               "analytics"
             ],
-            "descripcion": "Implementar sistema de recomendaciones basado en el historial de navegación y compras previas. Usar algoritmo de filtrado colaborativo y validar con datos históricos. Considerar integración con servicio externo o desarrollo propio.",
+            "descripcion": "# Algoritmo de Recomendaciones\n\nImplementar sistema de **recomendaciones basado en el historial** de navegación y compras previas.\n\n## Requisitos:\n- Usar algoritmo de **filtrado colaborativo**\n- Validar con datos históricos\n- Considerar integración con servicio externo o desarrollo propio\n\n### Performance\nLa API debe responder en *menos de 500ms* para mantener buena UX.\n\n> **Nota importante**: Podría empezar con una versión básica (13 pts) antes del sistema completo",
             "fecha": "2025-10-20",
             "pokerPlanning": "40",
             "notas": "Podría empezar con una versión básica (13 pts) antes del sistema completo"
@@ -37,9 +37,36 @@
               "backend",
               "marketing"
             ],
-            "descripcion": "Desarrollar un sistema flexible de promociones con códigos de descuento, cupones temporales y descuentos automáticos por volumen. Debe incluir validación de fechas y compatibilidad entre promociones.",
+            "descripcion": "## Sistema Flexible de Promociones\n\nDesarrollar un sistema que soporte:\n\n1. **Códigos de descuento** - Estáticos y dinámicos\n2. **Cupones temporales** - Con fechas de expiración\n3. **Descuentos automáticos** - Por volumen de compra\n\n### Requisitos técnicos\n- Validación de fechas y períodos\n- Compatibilidad entre promociones\n- Límite de usos por cupón\n- API REST documentada\n\n*Comienzo: próxima semana para cumplir con la fecha prevista*",
             "fecha": "2025-10-15",
             "pokerPlanning": "13",
+            "checklist": [
+              {
+                "id": "8-1",
+                "texto": "Diseñar esquema de base de datos",
+                "completado": false
+              },
+              {
+                "id": "8-2",
+                "texto": "Implementar endpoints CRUD",
+                "completado": false
+              },
+              {
+                "id": "8-3",
+                "texto": "Crear validadores y middlewares",
+                "completado": false
+              },
+              {
+                "id": "8-4",
+                "texto": "Escribir tests unitarios",
+                "completado": false
+              },
+              {
+                "id": "8-5",
+                "texto": "Documentar API endpoints",
+                "completado": false
+              }
+            ],
             "notas": "Debo comenzar la próxima semana para cumplir con la fecha prevista"
           },
           {
@@ -52,9 +79,31 @@
               "optimization",
               "mongodb"
             ],
-            "descripcion": "Reducir tiempo de respuesta de búsquedas en catálogo. Actualmente toma 2.5s en promedio con 10,000 productos. Meta: reducir a menos de 1s. Considerar índices, caching y optimización de queries.",
+            "descripcion": "## Mejora de Performance en BD\n\n### Situación actual\n- **Tiempo de búsqueda**: 2.5s (promedio)\n- **Productos indexados**: 10,000\n- **Meta**: Reducir a < 1s\n\n### Estrategias\n- Crear índices apropiados en campos frecuentes\n- Implementar caching con Redis\n- Optimizar queries y proyecciones\n- Analizar slow logs\n\n```mongodb\ndb.productos.createIndex({ categoria: 1, precio: 1 })\n```",
             "fecha": "2025-10-18",
             "pokerPlanning": "20",
+            "checklist": [
+              {
+                "id": "13-1",
+                "texto": "Analizar consultas más frecuentes",
+                "completado": false
+              },
+              {
+                "id": "13-2",
+                "texto": "Crear índices estratégicos",
+                "completado": false
+              },
+              {
+                "id": "13-3",
+                "texto": "Implementar caching Redis",
+                "completado": false
+              },
+              {
+                "id": "13-4",
+                "texto": "Benchmark y validación",
+                "completado": false
+              }
+            ],
             "notas": "Tengo que revisar las consultas más frecuentes para priorizar optimizaciones"
           },
           {
@@ -67,9 +116,31 @@
               "blocked",
               "security"
             ],
-            "descripcion": "Esperando credenciales de producción de Stripe para completar integración. Ya están implementados los webhooks y el flujo de pago en ambiente de prueba. Faltan pruebas de seguridad con tarjetas reales.",
+            "descripcion": "## Integración Stripe en Producción\n\n### Estado actual ✅\n- Webhooks implementados\n- Flujo de pago en ambiente de prueba\n- Manejo de errores completado\n\n### Pendiente ⏳\n1. Credenciales de producción (bloqueado)\n2. Pruebas de seguridad con tarjetas reales\n3. Validación PCI compliance\n\n### Contactos\n- **Equipo financiero**: Respuesta esperada 11/10\n- **Backup**: Contactar Stripe directamente 12/10 si no hay respuesta",
             "fecha": "2025-10-16",
             "pokerPlanning": "13",
+            "checklist": [
+              {
+                "id": "22-1",
+                "texto": "Obtener credenciales de producción",
+                "completado": false
+              },
+              {
+                "id": "22-2",
+                "texto": "Configurar API keys en producción",
+                "completado": false
+              },
+              {
+                "id": "22-3",
+                "texto": "Testing de seguridad (penetration)",
+                "completado": false
+              },
+              {
+                "id": "22-4",
+                "texto": "Validación PCI compliance",
+                "completado": false
+              }
+            ],
             "bloqueado": "Pendiente de respuesta del equipo financiero. Se espera resolución el 11/10. Si no hay respuesta, contactaré directamente a Stripe el 12/10.",
             "notas": "Todo el desarrollo previo está listo, solo falta la integración final con credenciales de producción"
           }
