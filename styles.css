@@ -518,7 +518,7 @@ main.contenedor {
 }
 
 .columna--nueva {
-  background: rgba(255, 255, 255, 0.7 );
+  background: rgba(255, 255, 255, 1 );
   border: 2px dashed var(--border-light);
   box-shadow: none;
   display: grid;
@@ -530,7 +530,7 @@ main.contenedor {
 .columna--nueva:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
 }
 
@@ -840,12 +840,12 @@ main.contenedor {
 
 /* Tema oscuro para botón de nueva lista */
 :root.dark .columna--nueva {
-  background: rgba(17, 24, 39, 0.7);
+  background: rgba(17, 24, 39, 1);
   border-color: var(--border-light);
 }
 
 :root.dark .columna--nueva:hover {
-  background: rgba(17, 24, 39, 0.9);
+  background: rgba(17, 24, 39, 1);
   border-color: var(--primary);
 }
 
