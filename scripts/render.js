@@ -56,7 +56,7 @@ function crearTarjeta(tarjeta) {
         etiquetasContainer.appendChild(etiquetasMostradas);
     }
 
-    // Sección de indicadores (fecha y poker planning)
+    // Sección de indicadores (fecha, checklist y poker planning)
     const indicadoresContainer = document.createElement('div');
     indicadoresContainer.className = 'indicadores-container d-flex align-items-center justify-content-between gap-2 flex-wrap';
 
@@ -70,6 +70,22 @@ function crearTarjeta(tarjeta) {
             <i data-lucide="calendar" width="14" height="14" aria-hidden="true"></i>
             ${fechaTexto}`;
         indicadoresContainer.appendChild(time);
+    }
+
+    // Contenedor de indicadores derechos (Checklist y Poker Planning)
+    const indicadoresDerechos = document.createElement('div');
+    indicadoresDerechos.className = 'd-flex align-items-center gap-1';
+
+    // Indicador de Checklist
+    if (tarjeta.checklist && Array.isArray(tarjeta.checklist) && tarjeta.checklist.length > 0) {
+        const checklistIndicator = document.createElement('span');
+        checklistIndicator.className = 'checklist-indicator badge d-inline-flex align-items-center gap-1';
+        checklistIndicator.title = `Checklist: ${tarjeta.checklist.filter(c => c.completado).length}/${tarjeta.checklist.length} completadas`;
+        checklistIndicator.innerHTML = `
+            <i data-lucide="check-square" width="14" height="14" aria-hidden="true"></i>
+            <span>${tarjeta.checklist.filter(c => c.completado).length}/${tarjeta.checklist.length}</span>
+        `;
+        indicadoresDerechos.appendChild(checklistIndicator);
     }
 
     // Poker Planning
@@ -96,7 +112,12 @@ function crearTarjeta(tarjeta) {
             <span>${tarjeta.pokerPlanning}</span>
         `;
         pokerIndicator.title = `Estimación: ${tarjeta.pokerPlanning} ${tarjeta.pokerPlanning === '?' ? 'puntos (incierto)' : 'puntos'}`;
-        indicadoresContainer.appendChild(pokerIndicator);
+        indicadoresDerechos.appendChild(pokerIndicator);
+    }
+
+    // Solo agregar el contenedor de derechos si tiene contenido
+    if (indicadoresDerechos.children.length > 0) {
+        indicadoresContainer.appendChild(indicadoresDerechos);
     }
 
     // Agregar secciones al pie

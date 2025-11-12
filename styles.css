@@ -397,35 +397,6 @@ main.contenedor {
   position: relative;
 }
 
-/* Indicador de checklist en tarjetas */
-.tarjeta.card[data-has-checklist="true"] .tarjeta__pie::before {
-  content: '';
-  position: absolute;
-  right: 0.75rem;
-  top: 0.75rem;
-  width: 16px;
-  height: 16px;
-  background: var(--primary);
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tarjeta.card[data-has-checklist="true"] .tarjeta__pie::after {
-  content: '';
-  position: absolute;
-  right: 0.75rem;
-  top: 0.75rem;
-  width: 16px;
-  height: 16px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3 8-8'/%3E%3Cpath d='M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.395 0 2.69.315 3.856.88'/%3E%3C/svg%3E");
-  background-size: 12px 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 2px;
-}
-
 /* Contenedor de etiquetas */
 .etiquetas-container {
   margin-bottom: 0.25rem;
@@ -910,6 +881,43 @@ main.contenedor {
   background: var(--primary-dark);
 }
 
+/* Indicador de Checklist */
+.checklist-indicator {
+  background: var(--success);
+  color: white;
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-base);
+  min-width: auto;
+  justify-content: center;
+}
+
+.checklist-indicator i {
+  flex-shrink: 0;
+}
+
+.checklist-indicator:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: #259265;
+}
+
+:root.dark .checklist-indicator {
+  background: #34D399;
+  color: #064E3B;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:root.dark .checklist-indicator:hover {
+  background: #10B981;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
 :root.dark .poker-planning-indicator {
   background: var(--primary-light);
   color: var(--primary-dark);
@@ -1060,7 +1068,39 @@ main.contenedor {
   justify-content: flex-end;
 }
 
-/* Tema oscuro para nuevos elementos */
+/* Estilos para Drag and Drop */
+.tarjeta.card[draggable="true"] {
+  user-select: none;
+}
+
+.tarjeta-arrastrada {
+  opacity: 0.5 !important;
+  transform: scale(1.05) !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tarjeta.card {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease-out;
+}
+
+.tarjetas-container.drag-over {
+  background-color: rgba(94, 86, 231, 0.1) !important;
+  border-radius: 8px;
+  outline: 2px dashed var(--primary);
+  padding: 0.5rem;
+  min-height: 50px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tarjetas-container {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Tema oscuro para drag and drop */
+:root.dark .tarjetas-container.drag-over {
+  background-color: rgba(94, 86, 231, 0.15) !important;
+  outline-color: var(--primary-light);
+}
 
 
 /* Estilos para la sección de checklist en el modal */
