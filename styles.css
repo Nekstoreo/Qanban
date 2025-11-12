@@ -670,6 +670,51 @@ main.contenedor {
   border-color: var(--border-light);
 }
 
+/* Estilos para título editable del modal */
+.titulo-modal {
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-base);
+  display: inline-block;
+  font-weight: var(--font-weight-semibold);
+}
+
+.titulo-modal:hover {
+  background: rgba(94, 86, 231, 0.1);
+  color: var(--primary);
+}
+
+.modal-title-input {
+  margin: -0.5rem 0;
+  font-weight: var(--font-weight-semibold);
+  font-size: 1.25rem;
+  border-radius: var(--border-radius-md);
+  border: 2px solid var(--primary);
+}
+
+.modal-title-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(94, 86, 231, 0.25);
+}
+
+:root.dark .titulo-modal:hover {
+  background: rgba(94, 86, 231, 0.2);
+  color: var(--primary-light);
+}
+
+:root.dark .modal-title-input {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--primary-light);
+}
+
+:root.dark .modal-title-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(94, 86, 231, 0.25);
+}
+
 :root.dark .modal-header {
   border-bottom-color: var(--border-light);
 }
@@ -1158,6 +1203,27 @@ main.contenedor {
   margin-top: 0;
 }
 
+/* Estilos para texto editable del checklist */
+.checklist-texto {
+  cursor: pointer;
+  user-select: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-base);
+  display: inline-block;
+}
+
+.checklist-item .checklist-texto:hover {
+  background: rgba(94, 86, 231, 0.1);
+  color: var(--primary);
+}
+
+/* Cuando está tachado (completado) */
+.checklist-item .checklist-texto.text-decoration-line-through:hover {
+  background: rgba(54, 179, 126, 0.1);
+  color: var(--success);
+}
+
 .checklist-item .btn {
   opacity: 0;
   transition: opacity var(--transition-base);
@@ -1184,4 +1250,317 @@ main.contenedor {
 :root.dark .checklist-item:hover {
   background: var(--surface-hover);
   border-color: var(--primary-light) !important;
+}
+
+:root.dark .checklist-texto {
+  color: var(--text-primary);
+}
+
+:root.dark .checklist-item .checklist-texto:hover {
+  background: rgba(94, 86, 231, 0.15);
+  color: var(--primary-light);
+}
+
+/* Cuando está tachado (completado) en tema oscuro */
+:root.dark .checklist-item .checklist-texto.text-decoration-line-through:hover {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34D399;
+}
+
+/* Estilos para la previsualización de markdown */
+.descripcion-container {
+  position: relative;
+  width: 100%;
+}
+
+#descripcion-preview-display {
+  background: var(--surface-hover);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  overflow-y: auto;
+  max-height: 300px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  transition: all var(--transition-base);
+}
+
+#descripcion-preview-display:hover {
+  background: var(--surface);
+  border-color: var(--primary-light);
+}
+
+:root.dark #descripcion-preview-display {
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+:root.dark #descripcion-preview-display:hover {
+  background: var(--surface);
+  border-color: var(--primary-light);
+}
+
+#descripcion-preview {
+  background: var(--surface-hover);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  overflow-y: auto;
+  max-height: 300px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+:root.dark #descripcion-preview {
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+/* Estilos para elementos markdown renderizados */
+#descripcion-preview-display h1,
+#descripcion-preview-display h2,
+#descripcion-preview-display h3,
+#descripcion-preview-display h4,
+#descripcion-preview-display h5,
+#descripcion-preview-display h6,
+#descripcion-preview h1,
+#descripcion-preview h2,
+#descripcion-preview h3,
+#descripcion-preview h4,
+#descripcion-preview h5,
+#descripcion-preview h6 {
+  font-weight: var(--font-weight-semibold);
+  margin: 0.75rem 0 0.5rem 0;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+#descripcion-preview-display h1 {
+  font-size: 1.5rem;
+}
+
+#descripcion-preview-display h2 {
+  font-size: 1.35rem;
+}
+
+#descripcion-preview-display h3 {
+  font-size: 1.2rem;
+}
+
+#descripcion-preview-display h4 {
+  font-size: 1.05rem;
+}
+
+#descripcion-preview-display h5,
+#descripcion-preview-display h6 {
+  font-size: 0.95rem;
+}
+
+#descripcion-preview-display p {
+  margin: 0.5rem 0;
+}
+
+#descripcion-preview h1 {
+  font-size: 1.5rem;
+}
+
+#descripcion-preview h2 {
+  font-size: 1.35rem;
+}
+
+#descripcion-preview h3 {
+  font-size: 1.2rem;
+}
+
+#descripcion-preview h4 {
+  font-size: 1.05rem;
+}
+
+#descripcion-preview h5,
+#descripcion-preview h6 {
+  font-size: 0.95rem;
+}
+
+#descripcion-preview p {
+  margin: 0.5rem 0;
+}
+
+#descripcion-preview strong,
+#descripcion-preview b,
+#descripcion-preview-display strong,
+#descripcion-preview-display b {
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-dark);
+}
+
+:root.dark #descripcion-preview strong,
+:root.dark #descripcion-preview b,
+:root.dark #descripcion-preview-display strong,
+:root.dark #descripcion-preview-display b {
+  color: var(--primary-light);
+}
+
+#descripcion-preview em,
+#descripcion-preview i,
+#descripcion-preview-display em,
+#descripcion-preview-display i {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+#descripcion-preview a,
+#descripcion-preview-display a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all var(--transition-base);
+}
+
+#descripcion-preview a:hover,
+#descripcion-preview-display a:hover {
+  border-bottom-color: var(--primary);
+  text-decoration: underline;
+}
+
+#descripcion-preview code,
+#descripcion-preview-display code {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-sm);
+  padding: 0.2rem 0.4rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+:root.dark #descripcion-preview code,
+:root.dark #descripcion-preview-display code {
+  background: var(--surface);
+  border-color: var(--border-light);
+  color: var(--accent);
+}
+
+#descripcion-preview pre,
+#descripcion-preview-display pre {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  color: var(--text-primary);
+}
+
+:root.dark #descripcion-preview pre,
+:root.dark #descripcion-preview-display pre {
+  background: var(--surface);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+#descripcion-preview pre code,
+#descripcion-preview-display pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+#descripcion-preview ul,
+#descripcion-preview ol,
+#descripcion-preview-display ul,
+#descripcion-preview-display ol {
+  margin: 0.75rem 0;
+  padding-left: 2rem;
+}
+
+#descripcion-preview ul li,
+#descripcion-preview ol li,
+#descripcion-preview-display ul li,
+#descripcion-preview-display ol li {
+  margin: 0.25rem 0;
+}
+
+#descripcion-preview blockquote,
+#descripcion-preview-display blockquote {
+  border-left: 4px solid var(--primary);
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+  font-style: italic;
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--primary);
+}
+
+:root.dark #descripcion-preview blockquote,
+:root.dark #descripcion-preview-display blockquote {
+  background: var(--surface);
+  border-left-color: var(--primary-light);
+  border-color: var(--border-light);
+  color: var(--text-secondary);
+}
+
+#descripcion-preview table,
+#descripcion-preview-display table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+#descripcion-preview table th,
+#descripcion-preview table td,
+#descripcion-preview-display table th,
+#descripcion-preview-display table td {
+  border: 1px solid var(--border-light);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+#descripcion-preview table th,
+#descripcion-preview-display table th {
+  background: var(--surface-hover);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+:root.dark #descripcion-preview table th,
+:root.dark #descripcion-preview-display table th {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+#descripcion-preview table td,
+#descripcion-preview-display table td {
+  color: var(--text-primary);
+}
+
+#descripcion-preview hr,
+#descripcion-preview-display hr {
+  border: none;
+  border-top: 2px solid var(--border-light);
+  margin: 1rem 0;
+}
+
+/* Etiqueta de información */
+.descripcion-info-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.descripcion-info-label i {
+  flex-shrink: 0;
 }

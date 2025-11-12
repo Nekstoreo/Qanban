@@ -92,7 +92,7 @@ function habilitarEdicionChecklistTexto($span, $checkboxInput) {
     const guardarEdicion = function() {
         const nuevoTexto = $input.val().trim() || textoActual;
         const estaPachado = $checkboxInput.is(':checked');
-        const $spanNueva = $(`<span class="flex-grow-1 checklist-texto ${estaPachado ? 'text-decoration-line-through text-muted' : ''}" style="cursor: pointer; padding: 4px 8px; border-radius: 4px;" title="Haz doble clic para editar">${nuevoTexto}</span>`);
+        const $spanNueva = $(`<span class="flex-grow-1 checklist-texto ${estaPachado ? 'text-decoration-line-through text-muted' : ''}" title="Haz doble clic para editar">${nuevoTexto}</span>`);
         
         $input.replaceWith($spanNueva);
         $spanNueva.on('dblclick', function() {
@@ -102,7 +102,7 @@ function habilitarEdicionChecklistTexto($span, $checkboxInput) {
 
     const cancelarEdicion = function() {
         const estaPachado = $checkboxInput.is(':checked');
-        const $spanRestore = $(`<span class="flex-grow-1 checklist-texto ${estaPachado ? 'text-decoration-line-through text-muted' : ''}" style="cursor: pointer; padding: 4px 8px; border-radius: 4px;" title="Haz doble clic para editar">${textoActual}</span>`);
+        const $spanRestore = $(`<span class="flex-grow-1 checklist-texto ${estaPachado ? 'text-decoration-line-through text-muted' : ''}" title="Haz doble clic para editar">${textoActual}</span>`);
         $input.replaceWith($spanRestore);
         $spanRestore.on('dblclick', function() {
             habilitarEdicionChecklistTexto($spanRestore, $checkboxInput);
@@ -125,7 +125,7 @@ function cargarChecklistEnModal(tarjeta) {
             const $checklistItem = $(
                 `<div class="checklist-item d-flex align-items-center gap-2 p-2 border rounded mb-2">
                     <input type="checkbox" class="form-check-input" ${item.completado ? 'checked' : ''}>
-                    <span class="flex-grow-1 checklist-texto ${item.completado ? 'text-decoration-line-through text-muted' : ''}" style="cursor: pointer; padding: 4px 8px; border-radius: 4px;" title="Haz doble clic para editar">${item.texto}</span>
+                    <span class="flex-grow-1 checklist-texto ${item.completado ? 'text-decoration-line-through text-muted' : ''}" title="Haz doble clic para editar">${item.texto}</span>
                     <button type="button" class="btn btn-sm btn-outline-danger border-0 opacity-50">
                         <i data-lucide="trash-2" width="14" height="14" aria-hidden="true"></i>
                     </button>
@@ -187,7 +187,7 @@ function agregarItemChecklist(texto = 'Nueva subtarea') {
     const $checklistItem = $(
         `<div class="checklist-item d-flex align-items-center gap-2 p-2 border rounded mb-2">
             <input type="checkbox" class="form-check-input">
-            <span class="flex-grow-1 checklist-texto" style="cursor: pointer; padding: 4px 8px; border-radius: 4px;" title="Haz doble clic para editar">${texto}</span>
+            <span class="flex-grow-1 checklist-texto" title="Haz doble clic para editar">${texto}</span>
             <button type="button" class="btn btn-sm btn-outline-danger border-0 opacity-50">
                 <i data-lucide="trash-2" width="14" height="14" aria-hidden="true"></i>
             </button>
