@@ -1564,3 +1564,37 @@ main.contenedor {
 .descripcion-info-label i {
   flex-shrink: 0;
 }
+
+/* Botón GitHub personalizado */
+.btn-github {
+  background: #1F2937;
+  color: #ffffff;
+  border: 1px solid #3F444D;
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+}
+
+.btn-github:hover {
+  background: #111827;
+  border-color: #FFFFFF;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 41, 55, 0.3);
+}
+
+.btn-github:focus {
+  box-shadow: 0 0 0 0.2rem rgba(95, 86, 231, 0.25);
+}
+
+:root.dark .btn-github {
+  background: #2D3748;
+  color: #ffffff;
+  border-color: #4A5568;
+}
+
+:root.dark .btn-github:hover {
+  background: #374151;
+  border-color: #E5E7EB;
+  color: #ffffff;
+}
